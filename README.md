@@ -34,7 +34,7 @@ docker-compose rm, docker-compose stop, docker-compose build & docker-compose up
 
 It is possible to alter the configuration on the tool to allow it to run in your own environment.
 
-Byn making changes in app/app.cfg you are able to alter the parameters used to configure where the hosts are running and
+By making changes in app/app.cfg you are able to alter the parameters used to configure where the hosts are running and
 where the geoserver can be found. Changes made to this file and the nginx site configuration files in
 resources/gdal/sites-enabled will allow you to either change the ports used, use existing installs of the tools or allow
 you to configure the system to run using different hostnames.
