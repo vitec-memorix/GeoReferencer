@@ -1,0 +1,2 @@
+<!DOCTYPE HTML>
+<script src="{{API_URL}}xdomain/xdomain.min.js" master="{{MASTER_URL}}"></script>

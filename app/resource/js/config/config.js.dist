@@ -1,0 +1,10 @@
+(function (angular) {
+    angular.module('Georeferencer.Boot').constant('CONFIG', {
+        api: {
+            url: '{{API_URL}}'
+        },
+        geoserver: {
+            url: '{{GEOSERVER_URL}}'
+        }
+    });
+})(window.angular);

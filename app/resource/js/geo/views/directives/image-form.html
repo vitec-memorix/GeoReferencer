@@ -1,0 +1,6 @@
+<form novalidate class="simple-form">
+    <label>{{'Title'|translate}}:</label> <input type="text" ng-model="imageForm.marker.title" />
+    <label>{{'Lat'|translate}}:</label> <input type="text" ng-model="imageForm.marker.geoLat" decimal/>
+    <label>{{'Lng'|translate}}</label> <input type="text" ng-model="imageForm.marker.geoLng" decimal/>
+    <input type="submit" data-ng-click="imageForm.updateMarker(imageForm.marker)" value="{{'Apply'|translate}}" />
+</form>

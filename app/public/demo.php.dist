@@ -1,0 +1,73 @@
+<?php 
+$fileIsUploaded = false;
+if (isset($_POST['submit']) && !empty($_FILES["file"])) {
+    $fileName = md5(basename($_FILES["file"]["name"]) . microtime());
+    $targetFile = '/assets/images/' . $fileName . '.jpg';
+    if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
+        $fileIsUploaded = true;
+    } else {
+        $fileIsUploaded = false;
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <base href="/">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Georeferencer Utility Demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/dist/css/vendors.css" />
+        <link rel="stylesheet" type="text/css" href="/dist/css/app.css" />
+        
+        <!--[if lte IE 9]>
+            <script src="{{API_URL}}/xdomain/xdomain.min.js" slave="{{API_URL}}/xdomain/proxy.html"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <?php if (!$fileIsUploaded) { ?>
+            <form method="post" enctype="multipart/form-data" class="upload">
+                <h4>Upload a new map</h4>
+                <input type="text" name="title" placeholder="Title"/>
+                <textarea name="description" placeholder="Description"></textarea>
+                <input type="text" name="place" placeholder="Place"/>
+                <div class="relative">
+                    <input type="file" id="file" name="file" class="fileupload" onchange="changeFileName(this);" />
+                    <label for="file" class="fileuptext">Upload Image</label>
+                    <span id="filename"></span>
+                    <input type="submit" value="Start" name="submit" />
+                </div>    
+                <div class="clear"></div>
+            </form>
+            <script>
+                function changeFileName(elem) {
+                    document.getElementById('filename').innerHTML = elem.value.replace(/.*\\/g, '');
+                }
+            </script>
+        <?php } else { ?>
+            <georeferencer />
+
+            <script type="text/javascript" src="//maps.google.com/maps/api/js?v=3&sensor=false"></script>
+            <script type="text/javascript" src="/dist/js/app-deps.min.js"></script>
+            <script type="text/javascript" src="/dist/js/app-partials.min.js"></script>
+            <script type="text/javascript" src="/dist/js/app.js"></script>
+
+            <script>
+                angular.element(document).ready(function () {
+                    angular.module('Georeferencer.Boot')
+                        .run(function (GeoState, GeoImage) {
+                            var image = GeoImage.$new({
+                                'url': '{{API_URL}}/file/<?php echo $fileName; ?>/jpg',
+                                'title': '<?php echo $_POST['title']; ?>',
+                                'description': '<?php echo $_POST['description']; ?>',
+                                'place': '<?php echo $_POST['place']; ?>',
+                            });
+                            GeoState.setImage(image);
+                        });
+                    angular.bootstrap(document, ['Georeferencer.Boot'])
+                });
+            </script>
+        <?php } ?>
+    </body>
+</html>

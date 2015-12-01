@@ -1,0 +1,24 @@
+{
+    "name": "georeferencer-template",
+    "description": "Georeferencer",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Boyan Bonev",
+            "email": "b.bonev@bluebuffstudio.com"
+        },
+        {
+            "name": "Doychin Lazarov",
+            "email": "d.lazarov@bluebuffstudio.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "ext-phalcon": ">=1.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Georeferencer\\": "src"
+        }
+    }
+}

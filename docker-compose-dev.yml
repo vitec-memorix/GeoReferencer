@@ -1,0 +1,37 @@
+geoserver:
+  build: .
+  dockerfile: Geoserver.dockerfile
+  ports:
+    - "8081:8081"
+  volumes_from:
+    - assets-data
+    - geoserver-data
+www:
+  build: .
+  dockerfile: Gdalserver.dockerfile
+  working_dir: /app
+  ports:
+    - "80:80"
+  links:
+    - geoserver
+  volumes:
+    - ./app/public/dist:/app/public/dist
+    - ./app/src:/app/src
+    - ./app/resource/js/boot:/app/resource/js/boot
+    - ./app/resource/js/geo:/app/resource/js/geo
+    - ./app/resource/sass:/app/resource/sass
+  volumes_from:
+    - assets
+    - assets-data
+assets:
+  build: .
+  dockerfile: Assets.dockerfile
+  command: watch
+assets-data:
+  build: .
+  dockerfile: Assets-data.dockerfile
+  command: tail -f /dev/null
+geoserver-data:
+  build: .
+  dockerfile: Geoserver-data.dockerfile
+  command: tail -f /dev/null

@@ -1,0 +1,21 @@
+$darkgrey: #4A4A4A;
+$medgrey: #5E5E5E;
+$lightgrey: #D8D8D8;
+$border: #979797;
+$yellow: #F5A623;
+$button: #5E5E5E;
+
+.ulclean {
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+:focus {
+    outline:none;
+}
+.clear {
+    clear:both;
+}
+.relative {
+    position:relative;
+}

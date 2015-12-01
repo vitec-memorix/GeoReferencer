@@ -1,0 +1,17 @@
+<div class="georeferencer-container">
+    <div class="mainnav" data-ng-if="geo.getMode() === 'default'">
+        <georeferencer-core />
+    </div>
+    <div class="mapcell" data-ng-if="geo.getMode() === 'default'">
+        <georeferencer-image />
+    </div>
+    <div class="mapcell" data-ng-if="geo.getMode() === 'default'">
+        <georeferencer-map />
+    </div>
+    <div class="preview" data-ng-if="geo.getMode() === 'preview'">
+        <georeferencer-preview />
+    </div>
+    <div class="finish" data-ng-if="geo.getMode() === 'finish'">
+        <georeferencer-finish />
+    </div>
+</div>

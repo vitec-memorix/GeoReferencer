@@ -1,0 +1,16 @@
+/nbproject
+/app/.bundle/
+/app/.sass-cache
+/app/.sass_cache/*
+/app/node_modules/
+/volumes/geoserver/
+/app/vendor/
+/app/public/dist/js/
+/app/public/dist/css/
+/app/public/dist/images/
+/app/resource/vendor/
+/resources/geoserver/geoserver-2.8.0-bin.zip
+/app/resource/js/config/config.js
+/app/config/config.php
+/app/public/demo.php
+/app/public/xdomain/proxy.html

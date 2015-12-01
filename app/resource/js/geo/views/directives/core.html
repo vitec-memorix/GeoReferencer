@@ -1,0 +1,33 @@
+<div class="geo-core-wrapper">
+    <ul class="menu">
+        <li data-ng-repeat="button in main.menu track by $index">
+            <button data-ng-click="button.dispatch()" data-ng-class="button.css()">
+                {{button.title|translate}}
+            </button>
+        </li>
+    </ul>
+    
+    <form ng-submit="main.searchLocation($event)">
+        <div class="search">
+            <input type="text" ng-model="main.search.query" placeholder="{{'search for location'|translate}}" />
+            <input type="submit" />
+        </div>
+        <ul class="search-locations hidden" ng-show="main.locations.length" ng-mouseleave="main.clearSearch()">
+            <li data-ng-repeat="location in main.locations track by $index">
+                <div class="search-location" data-ng-click="main.selectLocation(location)">{{location.title}}</div>
+            </li>
+        </ul>
+        <input id="historical-search" type="checkbox" ng-model="main.search.historic" value="1" />
+        <label for="historical-search">{{'use historical place name'|translate}}</label>
+    </form>
+    
+    <table class="lat-lng-list" ng-show="main.showList">
+        <tr ng-repeat="m in main.markers" id="{{m.id + '_row'}}" class="marker_row">
+            <td><div class="list-markers markers {{ m.id }}" ng-click="main.selectMarker(m)"></div></td>
+            <td>{{'Title'|translate}}: {{ m.title }}</td>
+            <td>{{'Lat'|translate}}: {{ m.geoLat | number:4 }}</td>
+            <td>{{'Lng'|translate}}: {{ m.geoLng | number:4 }}</td>
+            <td><button class="trash" ng-click="main.removeMarker(m)">{{'Remove'|translate}}</button></td>
+        </tr>
+    </table>
+</div>

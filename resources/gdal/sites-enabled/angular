@@ -1,0 +1,18 @@
+server {
+       server_name georeferencer.dev;
+       server_name_in_redirect off;
+
+       root /app/public;
+       index demo.php;
+
+       location / {
+                try_files $uri $uri/ /demo.php$is_args$args;
+       }
+
+       location ~ .*\.(php|phtml)?$ {
+                include /etc/nginx/fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_pass unix:/var/run/php5-fpm.sock;
+                fastcgi_index demo.php;
+       }
+}

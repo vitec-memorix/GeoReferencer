@@ -1,0 +1,20 @@
+<?php
+
+return new \ArrayObject(
+    [
+        'db' => [
+            'host' => '{{DB_HOST}}',
+            'dbname' => '{{DB_NAME}}',
+            'username' => '{{DB_USERNAME}}',
+            'password' => '{{DB_PASSWORD}}'
+        ],
+        'cors' => '{{CORS}}',
+        'geoserver' => [
+            'url' => '{{GEOSERVER_URL}}',
+            'user' => '{{GEOSERVER_USER}}',
+            'pass' => '{{GEOSERVER_PASS}}',
+            'workspace' => '{{GEOSERVER_WORKSPACE}}',
+        ],
+        'routesCollection' => include 'routes.php'
+    ]
+);

@@ -1,0 +1,19 @@
+<div class="geo-finish-wrapper">
+    <ul class="menu">
+        <li>
+            <button data-ng-click="finish.goBack()">&lt;</button>
+        </li>
+        <li>
+            <button class="middle" data-ng-click="finish.doFinish()">{{'Finish'|translate}}</button>
+        </li>
+    </ul>
+    <form ng-submit="finish.download($event)">
+        <h4>{{'Finish and download'|translate}}</h4>
+        <select name="singleSelect" ng-model="finish.downloadFormat">
+            <option value="">{{'Choose format'|translate}}</option>
+            <option value="geotiff">{{'Geotiff'|translate}}</option>
+            <option value="geojson">{{'GeoJSON'|translate}}</option>
+        </select>
+        <input type="submit" value="{{'Download'|translate}}" />
+    </form>
+</div>
