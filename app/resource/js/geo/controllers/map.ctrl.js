@@ -123,6 +123,9 @@
         }
         
         function centerGeoMap(_e, location) {
+            if (typeof(location) === 'undefined') {
+                return;
+            }
             leafletData.getMap('geoMap').then(function (map) {
                 var zoom = map.getMaxZoom() - 5;
                 if (zoom < map.getZoom()) {

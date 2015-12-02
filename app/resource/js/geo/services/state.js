@@ -13,6 +13,11 @@
         self.image = null;
         
         /**
+         * @desc Config
+         **/
+        self.config = {};
+        
+        /**
          * @desc If true, clicking on the image, marker will be added
          **/
         self.markerPermissionState = null;
@@ -98,6 +103,12 @@
         self.getMarkers = getMarkers;
         
         /**
+         * @desc Set markers
+         * @type {Function}
+         **/
+        self.setMarkers = setMarkers;
+        
+        /**
          * @desc Get all markers for image view
          * @type {Function}
          **/
@@ -151,6 +162,16 @@
          * @desc Returns lat, lng and zoom level for geo map
          */
         self.getGeoMap = getGeoMap;
+
+        /**
+         * @desc Sets configs
+         */
+        self.setConfig = setConfig;
+
+         /**
+         * @desc Returns config
+         */
+        self.getConfig = getConfig;
         
         function getImage() {
             return self.image;
@@ -231,6 +252,10 @@
         
         function getMarkers() {
             return self.markers;
+        }
+        
+        function setMarkers(markers) {
+            self.markers = markers;
         }
         
         function getImageMarkers() {
@@ -334,6 +359,14 @@
         
         function setGeoMap(map) {
             self.geoMap = map;
+        }
+        
+        function getConfig() {
+            return self.config;
+        }
+        
+        function setConfig(config) {
+            self.config = config;
         }
     }
 })(window.angular, window._);

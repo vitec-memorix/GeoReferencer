@@ -24,9 +24,10 @@
     ) {
         var vm = this;
         
-        vm.menu = [
-            {
-                'title': 'New',
+        var buttons = {
+            'new': {
+                'show': true,
+                'title': gettextCatalog.getString('New'),
                 'css': function () { 
                     return 'new-button'; 
                 },
@@ -34,8 +35,9 @@
                     $window.location.href = '/';
                 }
             },
-            {
-                'title': 'New reference point',
+            'new_reference_point': {
+                'show': true,
+                'title': gettextCatalog.getString('New reference point'),
                 'css': function () {
                     if (GeoState.checkPermissions('addImageMarker') || GeoState.checkPermissions('addMapMarker')) {
                         return 'new-point-button active'; 
@@ -48,8 +50,9 @@
                     }
                 }
             },
-            {
-                'title': 'List',
+            'list': {
+                'show': true,
+                'title': gettextCatalog.getString('List'),
                 'css': function () { 
                     return vm.showList ? 'list-button active' : 'list-button'; 
                 },
@@ -61,8 +64,9 @@
                     }
                 }
             },
-            {
-                'title': 'Finish',
+            'finish': {
+                'show': true,
+                'title': gettextCatalog.getString('Finish'),
                 'css': function () { 
                     return 'finish-button'; 
                 },
@@ -83,8 +87,9 @@
                     );
                 }
             },
-            {
-                'title': 'Preview',
+            'preview': {
+                'show': true,
+                'title': gettextCatalog.getString('Preview'),
                 'css': function () { 
                     return 'preview-button middle'; 
                 },
@@ -105,9 +110,11 @@
                     );
                 }
             }
-        ];
+        };
         
         vm.showList = false;
+        
+        vm.menu = [];
         
         vm.markers = [];
         
@@ -133,6 +140,19 @@
             MarkerRemoved.subscribe(refreshMarkers.bind(vm));
             MarkerSelected.subscribe(focusMarker.bind(vm));
             LocationFound.subscribe(showLocations.bind(vm));
+            
+            var config = GeoState.getConfig();
+            if ((typeof(config.buttons) !== 'undefined')) {
+                buttons = _.merge(buttons, config.buttons);
+            }
+            _.forEach(
+                buttons,
+                function (button, key)  {
+                    if (button.show) {
+                        vm.menu.push(button);
+                    }
+                }
+            );
             
             if ($stateParams.msg !== null) {
                 toastr.warning($stateParams.msg);

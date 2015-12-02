@@ -1,2 +1,8 @@
 <!DOCTYPE HTML>
-<script src="{{API_URL}}xdomain/xdomain.min.js" master="{{MASTER_URL}}"></script>
+<script src="{{API_URL}}xdomain/xdomain.min.js"></script>
+<script>
+    xdomain.masters({
+      "{{MASTER_URL_0}}": "*",
+      "{{MASTER_URL_1}}": "*",
+    });
+</script>

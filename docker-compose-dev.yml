@@ -26,6 +26,13 @@ www:
 assets:
   build: .
   dockerfile: Assets.dockerfile
+  working_dir: /app
+  volumes:
+    - ./app/public/dist:/app/public/dist
+    - ./app/src:/app/src
+    - ./app/resource/js/boot:/app/resource/js/boot
+    - ./app/resource/js/geo:/app/resource/js/geo
+    - ./app/resource/sass:/app/resource/sass
   command: watch
 assets-data:
   build: .
