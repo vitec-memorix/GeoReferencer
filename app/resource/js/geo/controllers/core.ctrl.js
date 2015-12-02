@@ -27,7 +27,7 @@
         var buttons = {
             'new': {
                 'show': true,
-                'title': gettextCatalog.getString('New'),
+                'title': gettextCatalog.getString('Start over'),
                 'css': function () { 
                     return 'new-button'; 
                 },

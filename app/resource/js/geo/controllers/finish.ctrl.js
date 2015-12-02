@@ -43,7 +43,9 @@
         }
         
         function doFinish() {
-            $window.location.href = '/';
+            if (confirm(gettextCatalog.getString('Are you sure? All your content will be removed!'))) {
+                $window.location.href = '/';
+            }
         }
         
         function download(event) {
