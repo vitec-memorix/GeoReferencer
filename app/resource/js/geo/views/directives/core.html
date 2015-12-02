@@ -24,7 +24,7 @@
     <table class="lat-lng-list" ng-show="main.showList">
         <tr ng-repeat="m in main.markers" id="{{m.id + '_row'}}" class="marker_row">
             <td><div class="list-markers markers {{ m.id }}" ng-click="main.selectMarker(m)"></div></td>
-            <td>{{'Title'|translate}}: {{ m.title }}</td>
+            <td><span ng-if="m.title !== ''">{{'Title'|translate}}: {{ m.title }}</span></td>
             <td>{{'Lat'|translate}}: {{ m.geoLat | number:4 }}</td>
             <td>{{'Lng'|translate}}: {{ m.geoLng | number:4 }}</td>
             <td><button class="trash" ng-click="main.removeMarker(m)">{{'Remove'|translate}}</button></td>
