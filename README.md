@@ -10,10 +10,13 @@ It sets up 3 docker images - a webserver (with Gdal tools cli compiled & install
 
 Steps to setup a development environment:
 
-1. git clone git@github.com:picturae/GeoReferencer.git ./geo
-2. cd ./geo
-3. docker-compose up
-4. Edit your hosts file to point georeferencer.dev, georeferencer-api.dev & geoserver.dev to the IP of your docker host.
+1. `$ git clone https://github.com/picturae/GeoReferencer ./geo`
+2. `$ cd ./geo`
+3. `$ docker-compose up`
+4. Edit your `/etc/hosts` file to point georeferencer.dev, georeferencer-api.dev & geoserver.dev to the IP of your docker host.
+E.g. add:
+
+`<docker ip> georeferencer.dev georeferencer-api.dev geoserver.dev`
 
 Dependencies are automatically fetched & installed. If you want to add a new one, simply remove the node_modules folder
 and up the containers.
@@ -34,8 +37,8 @@ docker-compose rm, docker-compose stop, docker-compose build & docker-compose up
 
 It is possible to alter the configuration on the tool to allow it to run in your own environment.
 
-By making changes in app/app.cfg you are able to alter the parameters used to configure where the hosts are running and
+By making changes in `app/app.cfg` you are able to alter the parameters used to configure where the hosts are running and
 where the geoserver can be found. Changes made to this file and the nginx site configuration files in
-resources/gdal/sites-enabled will allow you to either change the ports used, use existing installs of the tools or allow
+`resources/gdal/sites-enabled` will allow you to either change the ports used, use existing installs of the tools or allow
 you to configure the system to run using different hostnames.
 
