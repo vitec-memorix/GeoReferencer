@@ -10,7 +10,7 @@ It sets up 3 docker images - a webserver (with Gdal tools cli compiled & install
 
 Steps to setup a development environment:
 
-1. `$ git clone https://github.com/picturae/GeoReferencer ./geo`
+1. `$ git clone https://github.com/picturae/GeoReferencer.git ./geo`
 2. `$ cd ./geo`
 3. `$ docker-compose up`
 4. Edit your `/etc/hosts` file to point georeferencer.dev, georeferencer-api.dev & geoserver.dev to the IP of your docker host.
