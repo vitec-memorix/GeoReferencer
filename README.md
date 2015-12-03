@@ -4,7 +4,9 @@ GeoReferencer
 ## Development setup
 --------------
 
-The development setup requires only docker & docker compose > 1.7 present on the system.
+The development setup requires only docker & docker-compose > 1.7 present on the system. You can install these tools via
+your package manager. On the Mac you can use docker toolbox or install the tools via brew. See https://docs.docker.com/
+for more information regarding installing docker for your platform.
 
 It sets up 3 docker images - a webserver (with Gdal tools cli compiled & installed), an asset builder and a geoserver.
 
