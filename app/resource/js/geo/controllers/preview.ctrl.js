@@ -15,34 +15,43 @@
     ) {
         var vm = this;
         
+        var mapLayers = {
+            osm: {
+                name: 'Open Street Map',
+                url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                type: 'xyz'
+            },
+            googleTerrain: {
+                name: 'Google Terrain',
+                layerType: 'TERRAIN',
+                type: 'google'
+            },
+            googleHybrid: {
+                name: 'Google Hybrid',
+                layerType: 'HYBRID',
+                type: 'google'
+            },
+            googleRoadmap: {
+                name: 'Google Streets',
+                layerType: 'ROADMAP',
+                type: 'google'
+            }
+        };
+        
         vm.defaults = { 
             maxZoom: 18
         };
         
         vm.layers = { 
             baselayers: {
-                osm: {
-                    name: 'Open Street Map',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    type: 'xyz'
-                },
-                googleTerrain: {
-                    name: 'Google Terrain',
-                    layerType: 'TERRAIN',
-                    type: 'google'
-                },
-                googleHybrid: {
-                    name: 'Google Hybrid',
-                    layerType: 'HYBRID',
-                    type: 'google'
-                },
-                googleRoadmap: {
-                    name: 'Google Streets',
-                    layerType: 'ROADMAP',
-                    type: 'google'
-                }
+                osm: mapLayers.osm,
+                googleTerrain:  mapLayers.googleTerrain,
+                googleHybrid: mapLayers.googleHybrid,
+                googleRoadmap: mapLayers.googleRoadmap
             }
         };
+        
+        vm.activeMapLayerName = mapLayers.osm.name;
         
         vm.controls = {};
         
@@ -90,6 +99,10 @@
                     map.setView([52.3702157, 4.895167899999933], 8);
                 }
                 
+                if (imageCenter.layer !== null) {
+                    vm.activeMapLayerName = imageCenter.layer;
+                }
+                
                 vm.wms = L.tileLayer.wms(CONFIG.geoserver.url, {
                     layers: 'Georeferencer:' + image.getStoreName(),
                     format: 'image/png',
@@ -108,12 +121,36 @@
                     'Google Streets': new L.Google('ROADMAP', {}),
                 };
                 
-                var miniMap = new L.Control.MiniMap(layers['Open Street Map'], { toggleDisplay: true }).addTo(map);
+                var miniMap = new L.Control.MiniMap(layers[vm.activeMapLayerName], { toggleDisplay: true }).addTo(map);
                 miniMap._minimize();
                 
                 map.whenReady(function (e) {
                     $timeout(function() {
-                        $('.leaflet-control-layers-toggle').text(vm.layers.baselayers.osm.name);
+                        if (imageCenter.layer !== null) {
+                            _.forEach(
+                                mapLayers,
+                                function (layer, key)  {
+                                    if (layer.name !== imageCenter.layer) {
+                                        delete vm.layers.baselayers[key];
+                                        return;
+                                    }
+                                }
+                            );
+                            $timeout(function() {
+                                _.forEach(
+                                    mapLayers,
+                                    function (layer, key)  {
+                                        if (layer.name !== imageCenter.layer) {
+                                            vm.layers.baselayers[key] = layer;
+                                            return;
+                                        }
+                                    }
+                                );
+                            }, 100);
+                        }
+                        $timeout(function() {
+                            $('.leaflet-control-layers-toggle').text(vm.activeMapLayerName);
+                        }, 500);
                     }, 0);
                 });
                 

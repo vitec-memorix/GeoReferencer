@@ -40,7 +40,7 @@
         /**
          * @desc Hold settings for geo map
          **/
-        self.geoMap = {lat: null, lng: null, zoom: null};
+        self.geoMap = {lat: null, lng: null, zoom: null, layer: null};
 
         /**
          * @desc Set old image.

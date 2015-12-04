@@ -71,6 +71,8 @@
                     return 'finish-button'; 
                 },
                 'dispatch': function () {
+$state.go('finish');
+return;
                     $('.finish-button').addClass('loading');
                     GeoReference.queuePreview().then(
                         function (response) {
