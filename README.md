@@ -1,5 +1,10 @@
 GeoReferencer
 ===========
+An open source, stand-alone web application for georeferencing images, with very simple interface. GeoReferencer converts (scanned) images of maps (JPEG, TIFF, PNG) to GeoTIFF by allowing the user to select reference points on current maps (OpenStreetMap, Google Map or custom).
+
+Developed by Picturae B.V. for the project Erfgoed & Locatie ("Heritage and Location").
+
+
 
 ## Development setup
 --------------
