@@ -102,8 +102,6 @@
                     'Google Streets': new L.Google('ROADMAP', {})
                 };
                 
-                
-                
                 var miniMap = new L.Control.MiniMap(layers[vm.activeMapLayerName], { toggleDisplay: true }).addTo(map);
                 miniMap._minimize();
 		

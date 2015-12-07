@@ -7,7 +7,7 @@
     function ImageCtrl(
             $compile,
             $rootScope, 
-            $scope, 
+            $scope,
             gettext,
             GeoState, 
             GeoMarker, 
@@ -45,7 +45,6 @@
         activate();
 
         function activate() {
-            vm.imageMarkers = GeoState.getImageMarkers();
             MarkerAdded.subscribe(refreshMarkers.bind(vm));
             MarkerRemoved.subscribe(refreshMarkers.bind(vm));
             MarkerSelected.subscribe(focusMarker.bind(vm));
@@ -53,14 +52,8 @@
             leafletData.getMap('imageMap').then(function (map) {
                 vm.image = GeoState.getImage();
                 var sourceImage = new Image();
+                sourceImage.src = vm.image.url;
                 sourceImage.onload = function () {
-                    var imageMapCenter = GeoState.getImageMap();
-                    if (imageMapCenter.lat !== null) {
-                        map.setView([imageMapCenter.lat, imageMapCenter.lng], imageMapCenter.zoom);
-                    } else {
-                        map.setView([sourceImage.height/2, sourceImage.width/2], -2);
-                    }
-                    
                     if (vm.image.url !== '') {
                         vm.image.width = sourceImage.width;
                         vm.image.height = sourceImage.height;
@@ -92,9 +85,21 @@
                     var miniMap = new L.Control.MiniMap(minimapLayer, { toggleDisplay: true }).addTo(map);
                     miniMap._minimize();
                     
+                    var imageMapCenter = GeoState.getImageMap();
+                    if (imageMapCenter.lat !== null) {
+                        map.setView([imageMapCenter.lat, imageMapCenter.lng], imageMapCenter.zoom);
+                    } else {
+                        map.setView([sourceImage.height/2, sourceImage.width/2], -2);
+                        GeoState.setImageMap({
+                            lat: sourceImage.height/2, 
+                            lng: sourceImage.width/2, 
+                            zoom: -2
+                        });
+                    }
+                    
+                    vm.imageMarkers = GeoState.getImageMarkers();
                     $rootScope.$apply();
                 };
-                sourceImage.src = vm.image.url;
             });
         }
         
