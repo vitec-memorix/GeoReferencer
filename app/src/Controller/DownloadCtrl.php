@@ -15,9 +15,6 @@ class DownloadCtrl extends AbstractCtrl
     {
         try {
             switch ($format) {
-                case 'jpg':
-                    $file = '/assets/images/' . $id . '.jpg';
-                    break;
                 case 'geojson':
                     $file = '/assets/images/' . $id . '_geo_warp.json';
                     break;
@@ -25,7 +22,7 @@ class DownloadCtrl extends AbstractCtrl
                     $file = '/assets/images/' . $id . '_geo_warp.tiff';
                     break;
                 default:
-                    throw new Exception('File not found.');
+                    $file = '/assets/images/' . $id;
                     break;
             }
             if (file_exists($file)) {

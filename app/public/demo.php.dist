@@ -2,7 +2,7 @@
 $fileIsUploaded = false;
 if (isset($_POST['submit']) && !empty($_FILES["file"])) {
     $fileName = md5(basename($_FILES["file"]["name"]) . microtime());
-    $targetFile = '/assets/images/' . $fileName . '.jpg';
+    $targetFile = '/assets/images/' . $fileName;
     if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
         $fileIsUploaded = true;
     } else {
@@ -58,7 +58,7 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
                     angular.module('Georeferencer.Boot')
                         .run(function (GeoState, GeoImage) {
                             var image = GeoImage.$new({
-                                'url': '{{API_URL}}/file/<?php echo $fileName; ?>/jpg',
+                                'url': '{{API_URL}}/file/<?php echo $fileName; ?>/original',
                                 'title': '<?php echo $_POST['title']; ?>',
                                 'description': '<?php echo $_POST['description']; ?>',
                                 'place': '<?php echo $_POST['place']; ?>',
