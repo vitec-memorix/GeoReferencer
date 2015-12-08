@@ -38,10 +38,6 @@
             }
         };
         
-        vm.defaults = { 
-            maxZoom: 18
-        };
-        
         vm.layers = { 
             baselayers: {
                 osm: mapLayers.osm,

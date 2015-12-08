@@ -41,10 +41,6 @@
             }
         };
         
-        vm.defaults = { 
-            maxZoom: 18
-        };
-        
         vm.events = {
             map: {
                 enable: ['dragend', 'zoomend', 'click', 'baselayerchange'],

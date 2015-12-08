@@ -23,8 +23,8 @@
         vm.defaults = { 
             crs: 'Simple',
             zoom: -2,
-            minZoom: -3,
-            maxZoom: 2
+            minZoom: -4,
+            maxZoom: 0
         };
         
         vm.events = {
@@ -77,9 +77,9 @@
                         vm.image.url, 
                         [[0, sourceImage.width], [sourceImage.height, 0]], 
                         {
-                            zoom: -2, 
-                            minZoom: -3,
-                            maxZoom: 2
+                            zoom: vm.defaults.zoom,
+                            minZoom: vm.defaults.minZoom,
+                            maxZoom: vm.defaults.maxZoom
                         }
                     );
                     var miniMap = new L.Control.MiniMap(minimapLayer, { toggleDisplay: true }).addTo(map);
@@ -89,11 +89,11 @@
                     if (imageMapCenter.lat !== null) {
                         map.setView([imageMapCenter.lat, imageMapCenter.lng], imageMapCenter.zoom);
                     } else {
-                        map.setView([sourceImage.height/2, sourceImage.width/2], -2);
+                        map.setView([sourceImage.height/2, sourceImage.width/2], vm.defaults.zoom);
                         GeoState.setImageMap({
                             lat: sourceImage.height/2, 
                             lng: sourceImage.width/2, 
-                            zoom: -2
+                            zoom: vm.defaults.zoom
                         });
                     }
                     
