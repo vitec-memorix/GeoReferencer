@@ -32,7 +32,9 @@
                     return 'new-button'; 
                 },
                 'dispatch': function () {
-                    $window.location.href = '/';
+                    if (confirm(gettextCatalog.getString('Are you sure? All your content will be removed!'))) {
+                        $window.location.href = '/';
+                    }
                 }
             },
             'new_reference_point': {
