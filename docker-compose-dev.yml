@@ -15,6 +15,7 @@ www:
   links:
     - geoserver
   volumes:
+    - ./app/config/routes.php:/app/config/routes.php
     - ./app/public/dist:/app/public/dist
     - ./app/src:/app/src
     - ./app/resource/js/boot:/app/resource/js/boot
@@ -28,6 +29,7 @@ assets:
   dockerfile: Assets.dockerfile
   working_dir: /app
   volumes:
+    - ./app/config/routes.php:/app/config/routes.php
     - ./app/public/dist:/app/public/dist
     - ./app/src:/app/src
     - ./app/resource/js/boot:/app/resource/js/boot

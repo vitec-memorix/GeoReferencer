@@ -11,7 +11,7 @@ class DownloadCtrl extends AbstractCtrl
     /**
      * @acl access public
      */
-    public function get($id, $format) 
+    public function get($id, $format = null) 
     {
         try {
             switch ($format) {

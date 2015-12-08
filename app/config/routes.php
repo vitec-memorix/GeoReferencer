@@ -27,6 +27,7 @@ $configuration = [
         'setHandler' => '\Georeferencer\Controller\DownloadCtrl',
         'routes' => [
             'get' => [
+                '/file/{id:([^?]+)}' => 'get',
                 '/file/{id:([^?]+)}/{format:([^?]+)}' => 'get'
             ]
         ]

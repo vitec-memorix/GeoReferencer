@@ -58,7 +58,7 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
                     angular.module('Georeferencer.Boot')
                         .run(function (GeoState, GeoImage) {
                             var image = GeoImage.$new({
-                                'url': '{{API_URL}}/file/<?php echo $fileName; ?>/original',
+                                'url': '{{API_URL}}/file/<?php echo $fileName; ?>',
                                 'title': '<?php echo $_POST['title']; ?>',
                                 'description': '<?php echo $_POST['description']; ?>',
                                 'place': '<?php echo $_POST['place']; ?>',
