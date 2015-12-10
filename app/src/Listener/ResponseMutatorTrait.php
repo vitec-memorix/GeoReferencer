@@ -186,12 +186,17 @@ trait ResponseMutatorTrait
     protected function addResponseHeaders(Micro $app, Response $response)
     {
         $appConfig = $app->getDI()->get(Application::DI_CONFIG);
-        if (isset($appConfig['cors'])) {
-            $response->setHeader(
-                'Access-Control-Allow-Origin',
-                $appConfig['cors']
-            );
-        }
+//        Disable Access-Control-Allow-Origin from single host cause we make request from several
+//        if (isset($appConfig['cors'])) {
+//            $response->setHeader(
+//                'Access-Control-Allow-Origin',
+//                $appConfig['cors']
+//            );
+//        }
+        $response->setHeader(
+            'Access-Control-Allow-Origin',
+            '*'
+        );
 
         //Attach headers always to request.
         foreach (static::$headers as $headerKey => $headerValue) {
