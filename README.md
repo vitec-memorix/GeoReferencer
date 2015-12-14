@@ -11,7 +11,7 @@ Screenshot of reference points set
 <img src="https://cloud.githubusercontent.com/assets/16154470/11777935/8c9c7dec-a251-11e5-8d20-7ddefb47cbb7.png">
 
 Screenshot of the preview modus
-https://cloud.githubusercontent.com/assets/16154470/11777942/9261d33a-a251-11e5-869b-2ebeec2df13c.png
+<img src="https://cloud.githubusercontent.com/assets/16154470/11777942/9261d33a-a251-11e5-869b-2ebeec2df13c.png">
 
 
 ## Development setup
