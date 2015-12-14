@@ -1,12 +1,18 @@
 <?php 
 $fileIsUploaded = false;
+$error = null;
 if (isset($_POST['submit']) && !empty($_FILES["file"])) {
-    $fileName = md5(basename($_FILES["file"]["name"]) . microtime());
-    $targetFile = '/assets/images/' . $fileName;
-    if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
-        $fileIsUploaded = true;
+    if (in_array($_FILES['type'], ['image/jpeg', 'image/png', 'image/gif', 'image/tiff', 'image/jp2'])) {
+        $fileName = md5(basename($_FILES["file"]["name"]) . microtime());
+        $targetFile = '/assets/images/' . $fileName;
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
+            $fileIsUploaded = true;
+        } else {
+            $fileIsUploaded = false;
+        }
     } else {
         $fileIsUploaded = false;
+        $error = 'Unsuported file format!';
     }
 }
 ?>
@@ -29,6 +35,9 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
         <?php if (!$fileIsUploaded) { ?>
             <form method="post" enctype="multipart/form-data" class="upload">
                 <h4>Upload a new map</h4>
+                <?php if ($error !== null) { ?>
+                    <span class="error"><?php echo $error; ?></span>
+                <?php } ?>
                 <input type="text" name="title" placeholder="Title"/>
                 <textarea name="description" placeholder="Description"></textarea>
                 <input type="text" name="place" placeholder="Place"/>

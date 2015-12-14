@@ -672,3 +672,9 @@ form.upload {
         }
     }
 }
+
+.error {
+    color: $error;
+    display: inline-block;
+    margin-bottom: 10px;
+}
