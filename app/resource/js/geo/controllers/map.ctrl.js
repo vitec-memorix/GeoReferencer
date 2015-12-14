@@ -62,6 +62,8 @@
         vm.controls = {};
         
         vm.mapMarkers = [];
+        
+        vm.searchMarker = null;
 
         activate();
 
@@ -172,12 +174,16 @@
                 }
                 map.setView([location.lat, location.lng], zoom);
                 
-                var marker = leafletMarkersHelpers.createMarker({
-                    focus: false,
-                    draggable: false,
-                    lat: location.lat,
-                    lng: location.lng
-                }).addTo(map);
+                if (vm.searchMarker === null) {
+                    vm.searchMarker = leafletMarkersHelpers.createMarker({
+                        focus: false,
+                        draggable: false,
+                        lat: location.lat,
+                        lng: location.lng
+                    }).addTo(map);
+                } else {
+                    vm.searchMarker.setLatLng(new L.LatLng(location.lat, location.lng));
+                }
             });
         }
         
