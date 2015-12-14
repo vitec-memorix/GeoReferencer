@@ -4,6 +4,7 @@ An open source, stand-alone web application for georeferencing images, with very
 
 Developed by <a href="http://www.picturae.nl" target="_blank">Picturae B.V.</a> for the project <a href="http://erfgoedenlocatie.nl/" target="_blank">Erfgoed & Locatie ("Heritage and Location")</a>.
 
+<img src="https://cloud.githubusercontent.com/assets/16154470/11777918/7d8f5090-a251-11e5-9604-5428da2156ed.png">
 
 
 ## Development setup
