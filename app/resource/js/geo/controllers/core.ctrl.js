@@ -27,6 +27,7 @@
         var buttons = {
             'new': {
                 'show': true,
+                'order': 0,
                 'title': gettextCatalog.getString('Start over'),
                 'css': function () { 
                     return 'new-button'; 
@@ -39,6 +40,7 @@
             },
             'new_reference_point': {
                 'show': true,
+                'order': 1,
                 'title': gettextCatalog.getString('New reference point'),
                 'css': function () {
                     if (GeoState.checkPermissions('addImageMarker') || GeoState.checkPermissions('addMapMarker')) {
@@ -54,6 +56,7 @@
             },
             'list': {
                 'show': true,
+                'order': 2,
                 'title': gettextCatalog.getString('List'),
                 'css': function () { 
                     return vm.showList ? 'list-button active' : 'list-button'; 
@@ -68,6 +71,7 @@
             },
             'finish': {
                 'show': true,
+                'order': 3,
                 'title': gettextCatalog.getString('Finish'),
                 'css': function () { 
                     return 'finish-button'; 
@@ -91,6 +95,7 @@
             },
             'preview': {
                 'show': true,
+                'order': 4,
                 'title': gettextCatalog.getString('Preview'),
                 'css': function () { 
                     return 'preview-button middle'; 
@@ -116,7 +121,7 @@
         
         vm.showList = false;
         
-        vm.menu = [];
+        vm.menu = {};
         
         vm.markers = [];
         
@@ -151,7 +156,7 @@
                 buttons,
                 function (button, key)  {
                     if (button.show) {
-                        vm.menu.push(button);
+                        vm.menu[button.order] = button;
                     }
                 }
             );
