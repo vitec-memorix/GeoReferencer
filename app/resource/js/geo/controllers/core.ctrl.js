@@ -20,7 +20,8 @@
             LocationSelected, 
             GeoCoder,
             GeoReference,
-            HistoricalSearch
+            HistoricalSearch,
+            ngDialog
     ) {
         var vm = this;
         
@@ -93,9 +94,22 @@
                     );
                 }
             },
-            'preview': {
+            'info' : {
                 'show': true,
                 'order': 4,
+                'title': gettextCatalog.getString('?'),
+                'css': function () { 
+                    return 'info-button'; 
+                },
+                'dispatch': function () {
+                    ngDialog.open({
+                        template: 'infoTemplate'
+                    });
+                }
+            },
+            'preview': {
+                'show': true,
+                'order': 5,
                 'title': gettextCatalog.getString('Preview'),
                 'css': function () { 
                     return 'preview-button middle'; 

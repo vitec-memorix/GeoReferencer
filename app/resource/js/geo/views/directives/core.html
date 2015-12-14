@@ -30,4 +30,29 @@
             <td><button class="trash" ng-click="main.removeMarker(m)">{{'Remove'|translate}}</button></td>
         </tr>
     </table>
+    <script type="text/ng-template" id="infoTemplate">
+        <h2>{{'Hoe werkt het?'|translate}}</h2>
+        <p>{{'Doel van de applicatie is het koppelen van locaties op de historische kaart aan locaties op de moderne kaart door het plaatsen van "referentie punten". Door minimaal 3 goed gekozen referentiepunten te plaatsen wordt het mogelijk de historische kaart te koppelen aan het huidige straatbeeld.'|translate}}</p>
+        
+        <ol>
+            <li>{{'klik op "New reference point"'|translate}}</li>
+            <li>{{'klik op de locatie op de historische kaart'|translate}}</li>
+            <li>{{'klik op de verwante locatie op de nieuwe kaart'|translate}}</li>
+        </ol>
+
+        <p>{{'Herhaal dit proces tot dat er minimaal 3 referentie punten geplaatst zijn. Referentiepunten met dezelfde kleur horen bij elkaar.'|translate}}
+        {{'Geplaatste referentie punten kunnen verplaatst worden door ze aan te klikken en de muisknop ingedrukt te houden en los te laten op de nieuwe locatie.'|translate}}</p>
+
+        <p>{{'Door te klikken op "List" krijg je de gekoppelde informatie te zien. Referentiepunten kunnen in de lijst ook verwijderd worden.'|translate}}</p>
+
+        <p>{{'Aan de rechterkant kan een straat en/of plaatsnaam ingevoerd worden zodat de kaart naar betreffen de locatie inzoomt. Door "use historical place name" aan te klikken is het mogelijk om een historische plaats naam in te voeren. Het systeem zal dan een poging doen deze te koppelen aan moderne plaatsnaam.'|translate}}</p>
+
+        <p>{{'Gebruik de + en - om in en uit te zoomen op een van de vensters.'|translate}}</p>
+
+        <p>{{'Klik op Preview om te zie of de historische kaart goed over de nieuwe kaart ligt. In de Preview modus kan er door middel van de slider ook gespeeld worden met de transparantie.'|translate}}
+        {{'Klik weer op Preview om deze te sluiten.'|translate}}</p>
+
+        <p>{{'Wanneer je tevreden bent met her resultaat kan je klikken op Finish en de Geotiff downloaden.'|translate}}</p>
+        ----
+    </script>
 </div>

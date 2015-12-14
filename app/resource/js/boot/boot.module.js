@@ -11,6 +11,7 @@
             'angular-md5',
             'rzModule',
             'toastr',
+            'ngDialog',
             
             'Georeferencer.Partials',
 
