@@ -50,7 +50,11 @@
         
         function download(event) {
             var image = GeoState.getImage();
-            $window.location.href = CONFIG.api.url + '/file/' + image.getStoreName() + '/' + vm.downloadFormat;
+            var url = CONFIG.api.url + '/file/' + image.getStoreName() + '/' + vm.downloadFormat;
+            if (image.imageName !== '') {
+                url = url + '?fileName=' + image.imageName;
+            }
+            $window.location.href = url;
         }
     }
 })(window.angular, window._, window.jQuery, window.L);

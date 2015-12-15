@@ -35,6 +35,12 @@
                 self.height = 0;
                 
                 /**
+                 * @desc image original name
+                 * @type {String}
+                 **/
+                self.imageName = '';
+                
+                /**
                  * @desc geoserver store name
                  * @type {String}
                  **/

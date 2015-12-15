@@ -3,7 +3,8 @@ $fileIsUploaded = false;
 $error = null;
 if (isset($_POST['submit']) && !empty($_FILES["file"])) {
     if (in_array($_FILES['file']['type'], ['image/jpeg', 'image/png', 'image/gif', 'image/tiff', 'image/jp2'])) {
-        $fileName = md5(basename($_FILES["file"]["name"]) . microtime());
+        $originalFileName = $_FILES["file"]["name"];
+        $fileName = md5(basename($originalFileName) . microtime());
         $targetFile = '/assets/images/' . $fileName;
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
             $fileIsUploaded = true;
@@ -68,6 +69,7 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
                         .run(function (GeoState, GeoImage) {
                             var image = GeoImage.$new({
                                 'url': '{{API_URL}}/file/<?php echo $fileName; ?>',
+                                'imageName': '<?php echo addslashes($originalFileName); ?>',
                                 'title': '<?php echo addslashes($_POST['title']); ?>',
                                 'description': '<?php echo addslashes($_POST['description']); ?>',
                                 'place': '<?php echo addslashes($_POST['place']); ?>'
