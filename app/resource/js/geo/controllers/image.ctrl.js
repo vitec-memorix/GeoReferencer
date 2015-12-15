@@ -24,7 +24,7 @@
             crs: 'Simple',
             zoom: -2,
             minZoom: -4,
-            maxZoom: 0
+            maxZoom: 1
         };
         
         vm.events = {
