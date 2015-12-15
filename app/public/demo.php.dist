@@ -38,9 +38,9 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
                 <?php if ($error !== null) { ?>
                     <span class="error"><?php echo $error; ?></span>
                 <?php } ?>
-                <input type="text" name="title" placeholder="Title"/>
-                <textarea name="description" placeholder="Description"></textarea>
-                <input type="text" name="place" placeholder="Place"/>
+                <input type="text" name="title" placeholder="Title" value="<?php echo isset($_POST['title']) ?: ''; ?>"/>
+                <textarea name="description" placeholder="Description"><?php echo isset($_POST['description']) ?: ''; ?></textarea>
+                <input type="text" name="place" placeholder="Place" value="<?php echo isset($_POST['place']) ?: ''; ?>"/>
                 <div class="relative">
                     <input type="file" id="file" name="file" class="fileupload" onchange="changeFileName(this);" />
                     <label for="file" class="fileuptext">Upload Image</label>
@@ -68,9 +68,9 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
                         .run(function (GeoState, GeoImage) {
                             var image = GeoImage.$new({
                                 'url': '{{API_URL}}/file/<?php echo $fileName; ?>',
-                                'title': '<?php echo $_POST['title']; ?>',
-                                'description': '<?php echo $_POST['description']; ?>',
-                                'place': '<?php echo $_POST['place']; ?>',
+                                'title': '<?php echo addslashes($_POST['title']); ?>',
+                                'description': '<?php echo addslashes($_POST['description']); ?>',
+                                'place': '<?php echo addslashes($_POST['place']); ?>'
                             });
                             GeoState.setImage(image);
                         });
