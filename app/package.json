@@ -19,6 +19,7 @@
         "angular-leaflet-minimap": "Norkart/Leaflet-MiniMap#v2.2.0",
         "angular-simple-logger": "nmccready/angular-simple-logger#0.1.4",
         "angular-leaflet-plugins": "shramov/leaflet-plugins#1.3.11",
+        "angular-leaflet-deepzoom": "alfarisi/leaflet-deepzoom#v1.0.1",
         "angular-md5": "gdi2290/angular-md5#v0.1.8",
         "angular-slider": "rzajac/angularjs-slider#1.0.0",
         "angular-toastr": "Foxandxss/angular-toastr#1.5.0",

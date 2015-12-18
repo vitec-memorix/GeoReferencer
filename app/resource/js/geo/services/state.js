@@ -4,7 +4,7 @@
     angular.module('Georeferencer.Geo').service('GeoState', GeoState);
 
     /* @ngInject */
-    function GeoState(MarkerAdded, MarkerRemoved, md5) {
+    function GeoState(MarkerAdded, MarkerRemoved, md5, toastr, gettextCatalog) {
         var self = this;
         
         /**
@@ -255,7 +255,23 @@
         }
         
         function setMarkers(markers) {
-            self.markers = markers;
+            var errors = [];
+            _.forEach(
+                markers,
+                function (marker)  {
+                    if (marker.geoLat === null || marker.geoLng === null || 
+                        marker.imageLat === null || marker.imageLat === null ||
+                        marker.imageGeoLat === null || marker.imageGeoLat === null 
+                    ) {
+                        errors.push(gettextCatalog.getString('Missing data for point ' + marker.id + '!'));
+                    }
+                }
+            );
+            if (errors.length) {
+                toastr.warning(errors.join(' '));
+            } else {
+                self.markers = markers;
+            }
         }
         
         function getImageMarkers() {
@@ -320,8 +336,8 @@
                 ),
                 function (marker)  {
                     geoserverMarkers.push({
-                        tileCoordinatesX: marker.imageLng,
-                        tileCoordinatesY: self.image.height - marker.imageLat,
+                        tileCoordinatesX: marker.imageGeoLng,
+                        tileCoordinatesY: marker.imageGeoLat,
                         geoCoordinatesX: marker.geoLng,
                         geoCoordinatesY: marker.geoLat,
                     });

@@ -19,14 +19,9 @@
             leafletBoundsHelpers
     ) {
         var vm = this;
-
-        vm.defaults = { 
-            crs: 'Simple',
-            zoom: -2,
-            minZoom: -4,
-            maxZoom: 1
-        };
         
+        vm.defaults = {};
+
         vm.events = {
             map: {
                 enable: ['dragend', 'zoomend', 'click', 'popupopen'],
@@ -51,55 +46,107 @@
             
             leafletData.getMap('imageMap').then(function (map) {
                 vm.image = GeoState.getImage();
-                var sourceImage = new Image();
-                sourceImage.src = vm.image.url;
-                sourceImage.onload = function () {
-                    if (vm.image.url !== '') {
-                        vm.image.width = sourceImage.width;
-                        vm.image.height = sourceImage.height;
-                        GeoState.setImage(vm.image);
-                    }
-                    
-                    vm.layers.baselayers['default'] ={
-                        name: vm.image.title,
-                        type: 'imageOverlay',
-                        url: vm.image.url,
-                        bounds: [[0, sourceImage.width], [sourceImage.height, 0]],
-                        layerParams: {
-                            attribution: vm.image.description,
-                            showOnSelector: false
-                        }
+                if (vm.image.deepZoomUrl !== '') {
+                    vm.defaults = { 
+                        minZoom: 8,
                     };
                     
-                    map.setMaxBounds([[0, sourceImage.width], [sourceImage.height, 0]]);
-                    
-                    var minimapLayer = new L.imageOverlay(
-                        vm.image.url, 
-                        [[0, sourceImage.width], [sourceImage.height, 0]], 
-                        {
-                            zoom: vm.defaults.zoom,
-                            minZoom: vm.defaults.minZoom,
-                            maxZoom: vm.defaults.maxZoom
+                    var minimapLayer = L.tileLayer.deepzoom(
+                        vm.image.deepZoomUrl,
+                        { 
+                            width: vm.image.width, 
+                            height: vm.image.height,
+                            tolerance: 0.8,
                         }
                     );
-                    var miniMap = new L.Control.MiniMap(minimapLayer, { toggleDisplay: true }).addTo(map);
+                    var miniMap = new L.Control.MiniMap(minimapLayer, 
+                        { 
+                            toggleDisplay: true, 
+                            zoomLevelOffset: -4 
+                        }
+                    ).addTo(map);
                     miniMap._minimize();
-                    
+            
+                    var deepzoomLayer = L.tileLayer.deepzoom(
+                        vm.image.deepZoomUrl,
+                        { 
+                            width: vm.image.width, 
+                            height: vm.image.height,
+                            tolerance: 0.8,
+                        }
+                    ).addTo(map);
+
+                    var southWest = map.unproject([0, vm.image.height], map.getMaxZoom()),
+                        northEast = map.unproject([vm.image.width, 0], map.getMaxZoom()),
+                        bounds = new L.LatLngBounds(southWest, northEast);
+                   
+                    map.setMaxBounds(bounds);
+                    map.fitBounds(bounds);
+
                     var imageMapCenter = GeoState.getImageMap();
                     if (imageMapCenter.lat !== null) {
                         map.setView([imageMapCenter.lat, imageMapCenter.lng], imageMapCenter.zoom);
-                    } else {
-                        map.setView([sourceImage.height/2, sourceImage.width/2], vm.defaults.zoom);
-                        GeoState.setImageMap({
-                            lat: sourceImage.height/2, 
-                            lng: sourceImage.width/2, 
-                            zoom: vm.defaults.zoom
-                        });
                     }
-                    
+
                     vm.imageMarkers = GeoState.getImageMarkers();
-                    $rootScope.$apply();
-                };
+                } else {
+                    vm.defaults = { 
+                        crs: 'Simple',
+                        zoom: -2,
+                        minZoom: -4,
+                        maxZoom: 1
+                    };
+                    
+                    var sourceImage = new Image();
+                    sourceImage.src = vm.image.url;
+                    sourceImage.onload = function () {
+                        if (vm.image.url !== '') {
+                            vm.image.width = sourceImage.width;
+                            vm.image.height = sourceImage.height;
+                            GeoState.setImage(vm.image);
+                        }
+
+                        vm.layers.baselayers['default'] ={
+                            name: vm.image.title,
+                            type: 'imageOverlay',
+                            url: vm.image.url,
+                            bounds: [[0, sourceImage.width], [sourceImage.height, 0]],
+                            layerParams: {
+                                attribution: vm.image.description,
+                                showOnSelector: false
+                            }
+                        };
+
+                        map.setMaxBounds([[0, sourceImage.width], [sourceImage.height, 0]]);
+
+                        var minimapLayer = new L.imageOverlay(
+                            vm.image.url, 
+                            [[0, sourceImage.width], [sourceImage.height, 0]], 
+                            {
+                                zoom: vm.defaults.zoom,
+                                minZoom: vm.defaults.minZoom,
+                                maxZoom: vm.defaults.maxZoom
+                            }
+                        );
+                        var miniMap = new L.Control.MiniMap(minimapLayer, { toggleDisplay: true }).addTo(map);
+                        miniMap._minimize();
+
+                        var imageMapCenter = GeoState.getImageMap();
+                        if (imageMapCenter.lat !== null) {
+                            map.setView([imageMapCenter.lat, imageMapCenter.lng], imageMapCenter.zoom);
+                        } else {
+                            map.setView([sourceImage.height/2, sourceImage.width/2], vm.defaults.zoom);
+                            GeoState.setImageMap({
+                                lat: sourceImage.height/2, 
+                                lng: sourceImage.width/2, 
+                                zoom: vm.defaults.zoom
+                            });
+                        }
+
+                        vm.imageMarkers = GeoState.getImageMarkers();
+                        $rootScope.$apply();
+                    };
+                }
             });
         }
         
@@ -125,8 +172,21 @@
             leafletData.getMap('imageMap').then(function (map) {
                 GeoState.setCurrentMarkerId(e.model.id);
                 var marker = GeoState.getMarkerById(e.model.id);
+                
+                var image = GeoState.getImage();
+                if (image.deepZoomUrl !== '') {
+                    var point = L.latLng(e.model.lat, e.model.lng);
+                    var imageGeoLat = map.project(point, map.getMaxZoom()).y;
+                    var imageGeoLng = map.project(point, map.getMaxZoom()).x;
+                } else {
+                    var imageGeoLat = image.height - e.model.lat;
+                    var imageGeoLng = e.model.lng;
+                }
+                
                 marker.imageLat = e.model.lat;
                 marker.imageLng = e.model.lng;
+                marker.imageGeoLat = imageGeoLat;
+                marker.imageGeoLng = imageGeoLng;
 
                 GeoState.updateMarker(marker);
             });
@@ -156,9 +216,20 @@
                 if (!GeoState.checkPermissions('addImageMarker')) {
                     return;
                 }
+                
+                var image = GeoState.getImage();
+                if (image.deepZoomUrl !== '') {
+                    var imageGeoLat = map.project(e.leafletEvent.latlng, map.getMaxZoom()).y;
+                    var imageGeoLng = map.project(e.leafletEvent.latlng, map.getMaxZoom()).x;
+                } else {
+                    var imageGeoLat = image.height - e.leafletEvent.latlng.lat;
+                    var imageGeoLng = e.leafletEvent.latlng.lng;
+                }
                 GeoState.addMarker(GeoMarker.$new({
                     'imageLat': e.leafletEvent.latlng.lat, 
-                    'imageLng': e.leafletEvent.latlng.lng
+                    'imageLng': e.leafletEvent.latlng.lng,
+                    'imageGeoLat': imageGeoLat, 
+                    'imageGeoLng': imageGeoLng
                 }));
             });
         });

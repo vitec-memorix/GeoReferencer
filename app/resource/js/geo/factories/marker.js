@@ -41,6 +41,18 @@
                 self.imageLng = null;
                 
                 /**
+                 * @desc Coordinates for geoserver
+                 * @type {Decimal}
+                 **/
+                self.imageGeoLat = null;
+                
+                /**
+                 * @desc Coordinates for geoserver
+                 * @type {Decimal}
+                 **/
+                self.imageGeoLng = null;
+                
+                /**
                  * @desc Coordinates
                  * @type {Decimal}
                  **/

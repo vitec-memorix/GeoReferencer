@@ -23,6 +23,12 @@
                 self.url = '';
                 
                 /**
+                 * @desc use deepzoom
+                 * @type {String}
+                 **/
+                self.deepZoomUrl = '';
+                
+                /**
                  * @desc image width in pixels
                  * @type {Decimal}
                  **/
