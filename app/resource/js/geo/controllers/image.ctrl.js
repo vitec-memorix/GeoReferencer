@@ -43,14 +43,23 @@
             MarkerAdded.subscribe(refreshMarkers.bind(vm));
             MarkerRemoved.subscribe(refreshMarkers.bind(vm));
             MarkerSelected.subscribe(focusMarker.bind(vm));
+            vm.image = GeoState.getImage();
+            if (vm.image.deepZoomUrl !== '') {
+                vm.defaults = { 
+                    minZoom: 8,
+                };
+            } else {
+                vm.defaults = { 
+                    crs: 'Simple',
+                    zoom: -2,
+                    minZoom: -4,
+                    maxZoom: 1
+                };
+            }
             
             leafletData.getMap('imageMap').then(function (map) {
                 vm.image = GeoState.getImage();
                 if (vm.image.deepZoomUrl !== '') {
-                    vm.defaults = { 
-                        minZoom: 8,
-                    };
-                    
                     var minimapLayer = L.tileLayer.deepzoom(
                         vm.image.deepZoomUrl,
                         { 
@@ -90,13 +99,6 @@
 
                     vm.imageMarkers = GeoState.getImageMarkers();
                 } else {
-                    vm.defaults = { 
-                        crs: 'Simple',
-                        zoom: -2,
-                        minZoom: -4,
-                        maxZoom: 1
-                    };
-                    
                     var sourceImage = new Image();
                     sourceImage.src = vm.image.url;
                     sourceImage.onload = function () {
