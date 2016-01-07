@@ -1,18 +1,19 @@
 server {
-       server_name georeferencer-api.dev;
-       server_name_in_redirect off;
+    server_name georeferencer-api.dev;
+    server_name_in_redirect off;
 
-       root /app/public;
-       index index.php;
+    root /app/public;
+    index index.php;
 
-       location / {
-                try_files $uri $uri/ /index.php$is_args$args;
-       }
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
 
-       location ~ .*\.(php|phtml)?$ {
-                include /etc/nginx/fastcgi_params;
-                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                fastcgi_pass unix:/var/run/php5-fpm.sock;
-                fastcgi_index index.php;
-       }
+    location ~ .*\.(php|phtml)?$ {
+        include /etc/nginx/fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_read_timeout 60000;
+    }
 }

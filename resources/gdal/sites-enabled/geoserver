@@ -12,5 +12,6 @@ server {
     location / {
         include proxy_params;
         proxy_pass http://geoserver:8081/;
+        fastcgi_read_timeout 60000;
     }
 }
