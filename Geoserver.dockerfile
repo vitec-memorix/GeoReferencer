@@ -2,7 +2,7 @@ FROM java:8u66-jre
 MAINTAINER Picturae <contact@picturae.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV GEOSERVER_VERSION 2.8.0
+ENV GEOSERVER_VERSION 2.8.1
 
 ENV GEOSERVER_HOME /opt/geoserver
 ENV JAVA_HOME /usr/
