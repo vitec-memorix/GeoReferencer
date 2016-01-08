@@ -7,6 +7,7 @@
     function GeoReference(
             $q, 
             $http, 
+            $timeout, 
             gettextCatalog, 
             GeoState, 
             CONFIG
@@ -31,15 +32,38 @@
                     data: {'referencePoints': markers, 'image': image.url, 'storeName': storeName}
                 }).then(
                     function(response) {
-                        image.setStoreName(response.data.store);
-                        GeoState.setImage(image);
-                        work.resolve(response.data.store);
+                        if ((typeof(response.data.store) !== 'undefined') && (response.data.store === storeName)) {
+                            image.setStoreName(response.data.store);
+                            GeoState.setImage(image);
+                            work.resolve(response.data.store);
+                        } else {
+                            checkResult(storeName, image, work);
+                        }
                     }, function(msg, code) {
                         work.reject(msg);
                     }
                 );
             }
             return work.promise;
+        }
+        
+        function checkResult(storeName, image, work) {
+            $http({
+                method: 'GET',
+                url: CONFIG.api.url + '/get/' + storeName,
+            }).then(
+                function(res) {
+                    if ((typeof(res.data.store) !== 'undefined') && (res.data.store === storeName)) {
+                        image.setStoreName(res.data.store);
+                        GeoState.setImage(image);
+                        work.resolve(res.data.store);
+                    } else {
+                        $timeout(checkResult(storeName, image, work), 5000);
+                    }
+                }, function(msg, code) {
+                    work.reject(msg);
+                }
+            );
         }
     }
 })(window.angular, window._);

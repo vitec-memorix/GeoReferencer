@@ -16,6 +16,7 @@ $configuration = [
         'routes' => [
             'get' => [
                 '/preview' => 'preview',
+                '/get/{store:([^?]+)}' => 'get',
                 '/search/historical/{search:([^?]+)}' => 'historicalSearch'
             ],
             'post' => [
