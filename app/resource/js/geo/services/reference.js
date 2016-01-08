@@ -53,7 +53,10 @@
                 url: CONFIG.api.url + '/get/' + storeName,
             }).then(
                 function(res) {
-                    if ((typeof(res.data.store) !== 'undefined') && (res.data.store === storeName)) {
+                    if ((typeof(res.data) !== 'undefined') 
+                        && (typeof(res.data.store) !== 'undefined') 
+                        && (res.data.store === storeName)
+                    ) {
                         image.setStoreName(res.data.store);
                         GeoState.setImage(image);
                         work.resolve(res.data.store);
