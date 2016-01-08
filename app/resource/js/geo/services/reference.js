@@ -64,7 +64,9 @@
                         GeoState.setImage(image);
                         work.resolve(res.data.store);
                     } else {
-                        $timeout(checkResult(storeName, image, work), 5000);
+                        $timeout(function () {
+                            checkResult(storeName, image, work);
+                        }, 5000);
                     }
                 }, function(msg, code) {
                     work.reject(msg);
