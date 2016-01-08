@@ -50,6 +50,7 @@ class GeoCtrl extends AbstractCtrl
                 ignore_user_abort(true);
                 header('Content-Length: 0');
                 header('Connection: close');
+                header('Content-Encoding: none');
                 header('Content-Type: application/json');
                 
                 header('Access-Control-Allow-Credentials: true');
@@ -72,6 +73,8 @@ class GeoCtrl extends AbstractCtrl
                 ob_end_flush();
                 ob_flush();
                 flush();
+//                session_write_close();
+                fastcgi_finish_request();
                 die;
             }
             
