@@ -32,7 +32,10 @@
                     data: {'referencePoints': markers, 'image': image.url, 'storeName': storeName}
                 }).then(
                     function(response) {
-                        if ((typeof(response.data.store) !== 'undefined') && (response.data.store === storeName)) {
+                        if ((typeof(response.data) !== 'undefined')
+                            && (typeof(response.data.store) !== 'undefined') 
+                            && (response.data.store === storeName)
+                        ) {
                             image.setStoreName(response.data.store);
                             GeoState.setImage(image);
                             work.resolve(response.data.store);

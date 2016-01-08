@@ -20,6 +20,7 @@ class GeoCtrl extends AbstractCtrl
             if (is_file('/assets/images/' . $store . '_geo_warp.tiff')) {
                 return ['store' => $store];
             }
+            return [];
         } catch (Exception $ex) {
             return $ex->getMessage();
         }
