@@ -104,7 +104,8 @@
                     format: 'image/png',
                     crs: L.CRS.EPSG4326,
                     transparent: true,
-                    version: '1.1.1'
+                    version: '1.1.1',
+                    zIndex: 1
                 });
                 vm.wms.setOpacity(vm.slider.value / 100);
                 vm.wms.addTo(map);
