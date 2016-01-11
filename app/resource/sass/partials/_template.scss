@@ -205,7 +205,7 @@ button {
             margin-top: 16px;
             button {
                 padding-right:32px;
-                &:after {
+                .button-info {
                     background:url('../images/icons/view.svg') 0 12px no-repeat;
                     content:'';
                     margin-top:-8px;

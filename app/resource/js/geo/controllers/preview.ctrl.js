@@ -98,6 +98,13 @@
                     map.setView([52.3702157, 4.895167899999933], 8);
                 }
                 
+                var layers = {
+                    'Open Street Map': new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}),
+                    'Google Terrain': new L.Google('TERRAIN', {}),
+                    'Google Hybrid': new L.Google('HYBRID', {}),
+                    'Google Streets': new L.Google('ROADMAP', {}),
+                };
+                
                 if (imageCenter.layer !== null) {
                     vm.activeMapLayerName = imageCenter.layer;
                 }
@@ -115,13 +122,6 @@
                         vm.wms.setOpacity(vm.slider.value / 100);
                         vm.wms.addTo(map);
         //                controls.addOverlay(vm.wms, 'Old Map');
-
-                        var layers = {
-                            'Open Street Map': new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}),
-                            'Google Terrain': new L.Google('TERRAIN', {}),
-                            'Google Hybrid': new L.Google('HYBRID', {}),
-                            'Google Streets': new L.Google('ROADMAP', {}),
-                        };
 
                         var miniMap = new L.Control.MiniMap(layers[vm.activeMapLayerName], { toggleDisplay: true }).addTo(map);
                         miniMap._minimize();
