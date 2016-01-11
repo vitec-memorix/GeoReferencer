@@ -30,7 +30,6 @@
             leafletData.getMap('imageMap').then(function (map) {
                 map.closePopup();
             });
-            MarkerSelected.trigger(marker);
         }
     }
 })(window.angular, window._, window.jQuery);
