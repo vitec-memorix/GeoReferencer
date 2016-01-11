@@ -83,8 +83,11 @@
             
             leafletData.getMap('geoMap').then(function (map) {
                 var imageCenter = GeoState.getGeoMap();
+                var config = GeoState.getConfig();
                 if (imageCenter.lat !== null) {
                     map.setView([imageCenter.lat, imageCenter.lng], imageCenter.zoom);
+                } else if ((typeof(config.map) !== 'undefined') && (typeof(config.map.center) !== 'undefined')) {
+                    map.setView([config.map.center.lat, config.map.center.lng], config.map.center.zoom);
                 } else {
                     // Center to Amsterdam
                     map.setView([52.3702157, 4.895167899999933], 8);
