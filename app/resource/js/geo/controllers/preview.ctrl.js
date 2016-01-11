@@ -88,8 +88,11 @@
             
             leafletData.getMap('previewMap').then(function (map) {
                 var imageCenter = GeoState.getGeoMap();
+                var config = GeoState.getConfig();
                 if (imageCenter.lat !== null) {
                     map.setView([imageCenter.lat, imageCenter.lng], imageCenter.zoom);
+                } else if ((typeof(config.map) !== 'undefined') && (typeof(config.map.center) !== 'undefined')) {
+                    map.setView([config.map.center.lat, config.map.center.lng], config.map.center.zoom);
                 } else {
                     // Center to Amsterdam
                     map.setView([52.3702157, 4.895167899999933], 8);
@@ -99,30 +102,30 @@
                     vm.activeMapLayerName = imageCenter.layer;
                 }
                 
-                vm.wms = L.tileLayer.wms(CONFIG.geoserver.url, {
-                    layers: 'Georeferencer:' + image.getStoreName(),
-                    format: 'image/png',
-                    crs: L.CRS.EPSG4326,
-                    transparent: true,
-                    version: '1.1.1',
-                    zIndex: 1
-                });
-                vm.wms.setOpacity(vm.slider.value / 100);
-                vm.wms.addTo(map);
-//                controls.addOverlay(vm.wms, 'Old Map');
-
-                var layers = {
-                    'Open Street Map': new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}),
-                    'Google Terrain': new L.Google('TERRAIN', {}),
-                    'Google Hybrid': new L.Google('HYBRID', {}),
-                    'Google Streets': new L.Google('ROADMAP', {}),
-                };
-                
-                var miniMap = new L.Control.MiniMap(layers[vm.activeMapLayerName], { toggleDisplay: true }).addTo(map);
-                miniMap._minimize();
-                
                 map.whenReady(function (e) {
                     $timeout(function() {
+                        vm.wms = L.tileLayer.wms(CONFIG.geoserver.url, {
+                            layers: 'Georeferencer:' + image.getStoreName(),
+                            format: 'image/png',
+                            crs: L.CRS.EPSG4326,
+                            transparent: true,
+                            version: '1.1.1',
+                            zIndex: 1
+                        });
+                        vm.wms.setOpacity(vm.slider.value / 100);
+                        vm.wms.addTo(map);
+        //                controls.addOverlay(vm.wms, 'Old Map');
+
+                        var layers = {
+                            'Open Street Map': new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}),
+                            'Google Terrain': new L.Google('TERRAIN', {}),
+                            'Google Hybrid': new L.Google('HYBRID', {}),
+                            'Google Streets': new L.Google('ROADMAP', {}),
+                        };
+
+                        var miniMap = new L.Control.MiniMap(layers[vm.activeMapLayerName], { toggleDisplay: true }).addTo(map);
+                        miniMap._minimize();
+                
                         if (imageCenter.layer !== null) {
                             _.forEach(
                                 mapLayers,
