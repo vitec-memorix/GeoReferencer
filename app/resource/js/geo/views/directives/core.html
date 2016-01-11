@@ -3,6 +3,7 @@
         <li data-ng-repeat="button in main.menu track by $index">
             <button data-ng-click="button.dispatch()" data-ng-class="button.css()">
                 {{button.title|translate}}
+                <span class="button-info"></span>
             </button>
         </li>
     </ul>

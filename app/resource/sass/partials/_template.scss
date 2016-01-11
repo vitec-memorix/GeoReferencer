@@ -44,7 +44,7 @@ button {
 }
 .new-point-button {
     padding-right:24px;
-    &:after {
+    .button-info {
         background:url('../images/icons/pin.svg') 0 12px no-repeat;
         content:'';
         margin-top:-12px;
@@ -59,7 +59,7 @@ button {
     &.loading {
         padding-right:32px;
     }
-    &.loading:after {
+    &.loading .button-info {
         background:url('../images/icons/loader.gif') 0 12px no-repeat;
         content:'';
         margin-top:-8px;
@@ -68,6 +68,22 @@ button {
         position:absolute;
         right:6px;
         border:none;
+    }
+}
+.preview-button {
+    padding-right:32px;
+    .button-info {
+        background:url('../images/icons/view.svg') 0 12px no-repeat;
+        content:'';
+        margin-top:-8px;
+        width:22px;
+        height:36px;
+        position:absolute;
+        right:6px;
+        border:none;
+    }
+    &.loading .button-info {
+        background:url('../images/icons/loader.gif') 0 12px no-repeat;
     }
 }
 .geo-map-wrapper, .geo-image-wrapper, .geo-preview-wrapper {
@@ -104,22 +120,6 @@ button {
             position:absolute;
             left:50%;
             margin-left:-52px;
-            button {
-                padding-right:32px;
-                &:after {
-                    background:url('../images/icons/view.svg') 0 12px no-repeat;
-                    content:'';
-                    margin-top:-8px;
-                    width:22px;
-                    height:36px;
-                    position:absolute;
-                    right:6px;
-                    border:none;
-                }
-                &.loading:after {
-                    background:url('../images/icons/loader.gif') 0 12px no-repeat;
-                }
-            }
         }
     }
     .list-markers {
