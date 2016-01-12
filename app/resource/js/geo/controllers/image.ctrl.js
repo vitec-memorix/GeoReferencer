@@ -174,15 +174,16 @@
             leafletData.getMap('imageMap').then(function (map) {
                 GeoState.setCurrentMarkerId(e.model.id);
                 var marker = GeoState.getMarkerById(e.model.id);
+                var imageGeoLat, imageGeoLng;
                 
                 var image = GeoState.getImage();
                 if (image.deepZoomUrl !== '') {
                     var point = L.latLng(e.model.lat, e.model.lng);
-                    var imageGeoLat = map.project(point, map.getMaxZoom()).y;
-                    var imageGeoLng = map.project(point, map.getMaxZoom()).x;
+                    imageGeoLat = map.project(point, map.getMaxZoom()).y;
+                    imageGeoLng = map.project(point, map.getMaxZoom()).x;
                 } else {
-                    var imageGeoLat = image.height - e.model.lat;
-                    var imageGeoLng = e.model.lng;
+                    imageGeoLat = image.height - e.model.lat;
+                    imageGeoLng = e.model.lng;
                 }
                 
                 marker.imageLat = e.model.lat;
@@ -220,12 +221,14 @@
                 }
                 
                 var image = GeoState.getImage();
+                var imageGeoLat, imageGeoLng;
+                
                 if (image.deepZoomUrl !== '') {
-                    var imageGeoLat = map.project(e.leafletEvent.latlng, map.getMaxZoom()).y;
-                    var imageGeoLng = map.project(e.leafletEvent.latlng, map.getMaxZoom()).x;
+                    imageGeoLat = map.project(e.leafletEvent.latlng, map.getMaxZoom()).y;
+                    imageGeoLng = map.project(e.leafletEvent.latlng, map.getMaxZoom()).x;
                 } else {
-                    var imageGeoLat = image.height - e.leafletEvent.latlng.lat;
-                    var imageGeoLng = e.leafletEvent.latlng.lng;
+                    imageGeoLat = image.height - e.leafletEvent.latlng.lat;
+                    imageGeoLng = e.leafletEvent.latlng.lng;
                 }
                 GeoState.addMarker(GeoMarker.$new({
                     'imageLat': e.leafletEvent.latlng.lat, 

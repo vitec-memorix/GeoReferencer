@@ -26,46 +26,78 @@
             } else if (storeName === image.getStoreName()) {
                 work.resolve(image.getStoreName());
             } else {
-                $http({
-                    method: 'POST',
-                    url: CONFIG.api.url + '/preview',
-                    data: {'referencePoints': markers, 'image': image.url, 'storeName': storeName}
-                }).then(
-                    function(response) {
-                        if ((typeof(response.data) !== 'undefined')
-                            && (typeof(response.data.store) !== 'undefined') 
-                            && (response.data.store === storeName)
-                        ) {
-                            image.setStoreName(response.data.store);
-                            GeoState.setImage(image);
-                            work.resolve(response.data.store);
-                        } else {
-                            checkResult(storeName, image, work);
-                        }
-                    }, function(msg, code) {
-                        work.reject(msg);
-                    }
-                );
+                requestPreview(storeName, work);
             }
             return work.promise;
         }
         
-        function checkResult(storeName, image, work) {
+        function requestPreview(storeName, work) {
+            var markers = GeoState.getGeoserverMarkers();
+            var image = GeoState.getImage();
+            var geoserverMarkers = [];
+            var imageUrl = image.url;
+            
+            if ((image.previewImage !== '') && (image.previewWidth !== 0) && (image.previewHeight !== 0)) {
+                imageUrl = image.previewImage;
+                
+                var widthCoef = image.previewWidth / image.width;
+                var heightCoef = image.previewHeight / image.height;
+                
+                _.forEach(
+                    markers,
+                    function (marker)  {
+                        geoserverMarkers.push({
+                            tileCoordinatesX: marker.tileCoordinatesX * widthCoef,
+                            tileCoordinatesY: marker.tileCoordinatesY * heightCoef,
+                            geoCoordinatesX: marker.geoCoordinatesX,
+                            geoCoordinatesY: marker.geoCoordinatesY
+                        });
+                    }
+                );
+            } else {
+                geoserverMarkers = markers;
+            }
+            
+            $http({
+                method: 'POST',
+                url: CONFIG.api.url + '/preview',
+                data: {'referencePoints': geoserverMarkers, 'image': imageUrl, 'storeName': storeName}
+            }).then(
+                function(response) {
+                    if ((typeof(response.data) !== 'undefined') && 
+                        (typeof(response.data.store) !== 'undefined') && 
+                        (response.data.store === storeName)
+                    ) {
+                        image.setStoreName(response.data.store);
+                        GeoState.setImage(image);
+                        work.resolve(response.data.store);
+                    } else {
+                        checkResult(storeName, work);
+                    }
+                }, function(msg, code) {
+                    work.reject(msg);
+                }
+            );
+        }
+        
+        function checkResult(storeName, work) {
+            var image = GeoState.getImage();
+            
             $http({
                 method: 'GET',
                 url: CONFIG.api.url + '/get/' + storeName,
             }).then(
                 function(res) {
-                    if ((typeof(res.data) !== 'undefined') 
-                        && (typeof(res.data.store) !== 'undefined') 
-                        && (res.data.store === storeName)
+                    if ((typeof(res.data) !== 'undefined') && 
+                        (typeof(res.data.store) !== 'undefined') && 
+                        (res.data.store === storeName)
                     ) {
                         image.setStoreName(res.data.store);
                         GeoState.setImage(image);
                         work.resolve(res.data.store);
                     } else {
                         $timeout(function () {
-                            checkResult(storeName, image, work);
+                            checkResult(storeName, work);
                         }, 5000);
                     }
                 }, function(msg, code) {

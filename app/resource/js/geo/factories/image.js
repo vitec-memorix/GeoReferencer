@@ -41,6 +41,24 @@
                 self.height = 0;
                 
                 /**
+                 * @desc image url for preview
+                 * @type {String}
+                 **/
+                self.previewUrl = '';
+                
+                /**
+                 * @desc preview image width in pixels
+                 * @type {Decimal}
+                 **/
+                self.previewWidth = 0;
+                
+                /**
+                 * @desc preview image height in pixels
+                 * @type {Decimal}
+                 **/
+                self.previewHeight = 0;
+                
+                /**
                  * @desc image original name
                  * @type {String}
                  **/

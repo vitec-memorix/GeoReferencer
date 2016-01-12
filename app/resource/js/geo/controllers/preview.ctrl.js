@@ -109,6 +109,8 @@
                     vm.activeMapLayerName = imageCenter.layer;
                 }
                 
+                var miniMap = new L.Control.MiniMap(layers[vm.activeMapLayerName], { toggleDisplay: true });
+                
                 map.whenReady(function (e) {
                     $timeout(function() {
                         vm.wms = L.tileLayer.wms(CONFIG.geoserver.url, {
@@ -123,7 +125,7 @@
                         vm.wms.addTo(map);
         //                controls.addOverlay(vm.wms, 'Old Map');
 
-                        var miniMap = new L.Control.MiniMap(layers[vm.activeMapLayerName], { toggleDisplay: true }).addTo(map);
+                        miniMap.addTo(map);
                         miniMap._minimize();
                 
                         if (imageCenter.layer !== null) {
