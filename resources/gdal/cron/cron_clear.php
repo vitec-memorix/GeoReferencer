@@ -1,10 +1,10 @@
 #!/usr/bin/php
 <?php
 
-foreach (scandir(__DIR__ . '/../images') as $filename) {
-    $file = realpath(__DIR__ . '/../images/' . $filename);
-    if (file_exists($file)) {
-        if (filemtime($file) < (time() - 86400)) { // 24 hours ago
+foreach (scandir('/assets/images') as $filename) {
+    $file = realpath('/assets/images/' . $filename);
+    if (file_exists($file) && is_file($file)) {
+        if (filemtime($file) < (time() - 60)) { // 24 hours ago
             if (preg_match('~(\w+)_geo_warp\.tiff~', $filename, $matches)) {
                 $url = 'http://geoserver:8081/geoserver/rest/workspaces/Georeferencer/coveragestores/' . $matches[1] . '?recurse=true';
                 $handle = curl_init($url);

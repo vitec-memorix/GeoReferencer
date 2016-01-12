@@ -1,0 +1,1 @@
+* * * * * root php /gdal/cron/cron_clear.php
