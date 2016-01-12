@@ -58,10 +58,10 @@ class Gdal
         $config = $this->config;
         $url = $config['geoserver']['url'] . '/workspaces/' . $config['geoserver']['workspace'];
         $handle = curl_init($url);
-        curl_setopt($handle, CURLOPT_POST, True);
+        curl_setopt($handle, CURLOPT_GET, true);
         curl_setopt($handle,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($handle, CURLOPT_USERPWD, $config['geoserver']['user'] . ':' . $config['geoserver']['pass']);
-        curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-type: application/xml"));
+        curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-type: text/xml", "Accept: text/xml"));
 	$response = curl_exec($handle);
 	curl_close($handle);
         
@@ -72,7 +72,7 @@ class Gdal
         $url = $config['geoserver']['url'] . '/workspaces';
         $request = '<workspace><name>' . $config['geoserver']['workspace'] . '</name></workspace>';
         $handle = curl_init($url);
-        curl_setopt($handle, CURLOPT_POST, True);
+        curl_setopt($handle, CURLOPT_POST, true);
         curl_setopt($handle,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($handle, CURLOPT_USERPWD, $config['geoserver']['user'] . ':' . $config['geoserver']['pass']);
         curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-type: application/xml"));

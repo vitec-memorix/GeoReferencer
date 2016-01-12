@@ -47,7 +47,7 @@ button {
     .button-info {
         background:url('../images/icons/pin.svg') 0 12px no-repeat;
         content:'';
-        margin-top:-12px;
+        top:-4px;
         width:16px;
         height:36px;
         position:absolute;
@@ -75,7 +75,7 @@ button {
     .button-info {
         background:url('../images/icons/view.svg') 0 12px no-repeat;
         content:'';
-        margin-top:-8px;
+        top:0;
         width:22px;
         height:36px;
         position:absolute;
@@ -208,7 +208,7 @@ button {
                 .button-info {
                     background:url('../images/icons/view.svg') 0 12px no-repeat;
                     content:'';
-                    margin-top:-8px;
+                    top:0;
                     width:22px;
                     height:36px;
                     position:absolute;
