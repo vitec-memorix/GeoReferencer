@@ -1,20 +1,25 @@
 <?php 
 $fileIsUploaded = false;
-$error = null;
-if (isset($_POST['submit']) && !empty($_FILES["file"])) {
-    if (in_array($_FILES['file']['type'], ['image/jpeg', 'image/png', 'image/gif', 'image/tiff', 'image/jp2'])) {
-        $originalFileName = $_FILES["file"]["name"];
-        $fileName = md5(basename($originalFileName) . microtime());
-        $targetFile = '/assets/images/' . $fileName;
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
-            $fileIsUploaded = true;
-        } else {
-            $fileIsUploaded = false;
-        }
-    } else {
-        $fileIsUploaded = false;
-        $error = 'Unsuported file format!';
-    }
+
+if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'])) {
+	$tempFile = $_FILES['Filedata']['tmp_name'];
+	$targetPath ='/assets/images/';
+        $fileName = md5(basename($_FILES['Filedata']['name']) . microtime());
+	$targetFile = rtrim($targetPath,'/') . '/' . $fileName;
+	
+	// Validate the file type
+	$fileTypes = array('jpg','jpeg','gif','png', 'tiff', 'jp2'); // File extensions
+	$fileParts = pathinfo($_FILES['Filedata']['name']);
+	
+	if (in_array($fileParts['extension'],$fileTypes)) {
+            move_uploaded_file($tempFile,$targetFile);
+            echo $fileName;
+	} else {
+            echo 0;
+	}
+        die;
+} else if (isset($_POST['submit'])) {
+    $fileIsUploaded = true;
 }
 ?>
 <!DOCTYPE html>
@@ -34,19 +39,21 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
     </head>
     <body>
         <?php if (!$fileIsUploaded) { ?>
+            <script src="//code.jquery.com/jquery-1.12.0.min.js" type="text/javascript"></script>
+            <script src="/uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
+            <link rel="stylesheet" type="text/css" href="/uploadify/uploadify.css">
             <form method="post" enctype="multipart/form-data" class="upload">
                 <h4>Upload a new map</h4>
-                <?php if ($error !== null) { ?>
-                    <span class="error"><?php echo $error; ?></span>
-                <?php } ?>
+                <span class="error" style="display:none;"><?php echo 'Invalid file type.'; ?></span>
                 <input type="text" name="title" placeholder="Title" value="<?php echo isset($_POST['title']) ? $_POST['title'] : ''; ?>"/>
                 <textarea name="description" placeholder="Description"><?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
                 <input type="text" name="place" placeholder="Place" value="<?php echo isset($_POST['place']) ? $_POST['place'] : ''; ?>"/>
                 <div class="relative">
                     <input type="file" id="file" name="file" class="fileupload" onchange="changeFileName(this);" />
-                    <label for="file" class="fileuptext">Upload Image</label>
+                    <!--<label for="file" class="fileuptext">Upload Image</label>-->
                     <span id="filename"></span>
-                    <input type="submit" value="Start" name="submit" />
+                    <input type="hidden" value="" id="file_name" name="file_name" />
+                    <input type="submit" value="Start" id="form_submit" name="submit" disabled="disabled"/>
                 </div>    
                 <div class="clear"></div>
             </form>
@@ -54,6 +61,29 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
                 function changeFileName(elem) {
                     document.getElementById('filename').innerHTML = elem.value.replace(/.*\\/g, '');
                 }
+		<?php $timestamp = time();?>
+		$(function() {
+                    $('#file').uploadify({
+                        'formData': {
+                            'timestamp' : '<?php echo $timestamp;?>',
+                            'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
+                        },
+                        'swf'      : '/uploadify/uploadify.swf',
+                        'uploader' : '/',
+                        'fileSizeLimit' : '30MB',
+                        'fileTypeExts' : '*.gif; *.jpg; *.png; *.tiff; *.jp2',
+                        'multi'    : false,
+                        'onUploadSuccess' : function(file, data, response) {
+                            if (data !== '0') {
+                                $('#file_name').val(data);
+                                $('#filename').html(file.name);
+                                $('#form_submit').removeAttr('disabled');
+                            } else {
+                                $('.error').show();
+                            }
+                        }
+                    });
+		});
             </script>
         <?php } else { ?>
             <georeferencer />
@@ -68,7 +98,7 @@ if (isset($_POST['submit']) && !empty($_FILES["file"])) {
                     angular.module('Georeferencer.Boot')
                         .run(function (GeoState, GeoImage) {
                             var image = GeoImage.$new({
-                                'url': '{{API_URL}}/file/<?php echo $fileName; ?>',
+                                'url': '{{API_URL}}/file/<?php echo $_POST['file_name']; ?>',
                                 'imageName': '<?php echo addslashes($originalFileName); ?>',
                                 'title': '<?php echo addslashes($_POST['title']); ?>',
                                 'description': '<?php echo addslashes($_POST['description']); ?>',
