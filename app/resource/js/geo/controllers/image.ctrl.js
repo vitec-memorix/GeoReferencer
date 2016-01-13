@@ -8,6 +8,8 @@
             $compile,
             $rootScope, 
             $scope,
+            toastr,
+            gettextCatalog,
             gettext,
             GeoState, 
             GeoMarker, 
@@ -217,6 +219,7 @@
         $scope.$on('leafletDirectiveMap.click', function(event, e) {
             leafletData.getMap('imageMap').then(function (map) {
                 if (!GeoState.checkPermissions('addImageMarker')) {
+                    toastr.info(gettextCatalog.getString('Please click "Start" button first.'));
                     return;
                 }
                 

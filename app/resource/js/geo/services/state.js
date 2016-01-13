@@ -227,8 +227,8 @@
                     m = marker;
                 }
             );
-            MarkerAdded.trigger(self.markers);
             self.markerPermissionState = null;
+            MarkerAdded.trigger(self.markers);
         }
         
         function removeMarker(marker) {

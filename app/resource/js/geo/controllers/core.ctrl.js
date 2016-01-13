@@ -42,16 +42,24 @@
             'new_reference_point': {
                 'show': true,
                 'order': 1,
-                'title': gettextCatalog.getString('New reference point'),
+                'title': gettextCatalog.getString('Start'),
                 'css': function () {
                     if (GeoState.checkPermissions('addImageMarker') || GeoState.checkPermissions('addMapMarker')) {
                         return 'new-point-button active'; 
                     }
-                    return 'new-point-button'; 
+                    return 'new-point-button';
                 },
                 'dispatch': function () {
                     if (!GeoState.checkPermissions('addImageMarker') && !GeoState.checkPermissions('addMapMarker')) {
                         GeoState.setPermissions('addImageMarker');
+                        _.forEach(
+                            vm.menu,
+                            function (button, key)  {
+                                if (button.key === 'new_reference_point') {
+                                    vm.menu[button.order].title = gettextCatalog.getString('Place 2 markers');
+                                }
+                            }
+                        );
                     }
                 }
             },
@@ -170,6 +178,7 @@
                 buttons,
                 function (button, key)  {
                     if (button.show) {
+                        button.key = key;
                         vm.menu[button.order] = button;
                     }
                 }
@@ -184,6 +193,17 @@
         }
         
         function refreshMarkers(_e, markers) {
+            _.forEach(
+                vm.menu,
+                function (button, key)  {
+                    if (button.key === 'new_reference_point') {
+                        if (!GeoState.checkPermissions('addMapMarker')) {
+                            vm.menu[button.order].title = gettextCatalog.getString('Start');
+                        }
+                    }
+                }
+            );
+            
             this.markers = GeoState.getMarkers();
         }
         

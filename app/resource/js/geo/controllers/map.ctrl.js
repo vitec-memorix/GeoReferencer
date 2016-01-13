@@ -7,6 +7,8 @@
     function MapCtrl (
             $scope, 
             $timeout,
+            toastr,
+            gettextCatalog,
             GeoState, 
             MarkerAdded, 
             MarkerRemoved, 
@@ -211,6 +213,7 @@
         $scope.$on('leafletDirectiveMap.click', function(event, e) {
             leafletData.getMap('geoMap').then(function (map) {
                 if (!GeoState.checkPermissions('addMapMarker')) {
+                    toastr.info(gettextCatalog.getString('Please click "Start" button first.'));
                     return;
                 }
                 var marker = GeoState.getMarkerById(GeoState.getCurrentMarkerId());
