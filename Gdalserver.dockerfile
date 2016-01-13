@@ -38,10 +38,10 @@ ADD ./resources/gdal/supervisor/conf.d /etc/supervisor/conf.d
 ADD ./resources/gdal/nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./resources/gdal/sites-enabled/* /etc/nginx/sites-enabled/
 # Add our crontab file
-ADD ./resources/gdal/cron/crontab.txt /gdal/cron/crontab.txt
-ADD ./resources/gdal/cron/cron_clear.php /gdal/cron/cron_clear.php
+#ADD ./resources/gdal/cron/crontab.txt /gdal/cron/crontab.txt
+#ADD ./resources/gdal/cron/cron_clear.php /gdal/cron/cron_clear.php
 
-RUN apt-get update && apt-get install cron -y
+#RUN apt-get update && apt-get install cron -y
 
 #Use the crontab file
 #RUN sed -i '$ a\*/15 * * * * root /usr/bin/php /gdal/cron/cron_clear.php' /etc/crontab
