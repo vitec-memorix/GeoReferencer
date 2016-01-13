@@ -41,12 +41,13 @@ ADD ./resources/gdal/sites-enabled/* /etc/nginx/sites-enabled/
 ADD ./resources/gdal/cron/crontab.txt /gdal/cron/crontab.txt
 ADD ./resources/gdal/cron/cron_clear.php /gdal/cron/cron_clear.php
 
-RUN apt-get update && apt-get install cron -y
+#RUN apt-get update && apt-get install cron -y
 
 #Use the crontab file
-RUN crontab /gdal/cron/crontab.txt
+#RUN crontab /gdal/cron/crontab.txt
 
-RUN cron
+#RUN sed -i '$ a\* * * * * root /usr/bin/php /gdal/cron/cron_clear.php' /etc/crontab
+#RUN cron
 
 VOLUME ["/app", "/assets"]
 

@@ -2,23 +2,23 @@
 $fileIsUploaded = false;
 
 if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'])) {
-	$tempFile = $_FILES['Filedata']['tmp_name'];
-	$targetPath ='/assets/images/';
-        $fileName = md5(basename($_FILES['Filedata']['name']) . microtime());
-	$targetFile = rtrim($targetPath,'/') . '/' . $fileName;
-	
-	// Validate the file type
-	$fileTypes = array('jpg','jpeg','gif','png', 'tiff', 'jp2'); // File extensions
-	$fileParts = pathinfo($_FILES['Filedata']['name']);
-	
-	if (in_array($fileParts['extension'],$fileTypes)) {
-            move_uploaded_file($tempFile,$targetFile);
-            echo $fileName;
-	} else {
-            echo 0;
-	}
-        die;
-} else if (isset($_POST['submit'])) {
+    $tempFile = $_FILES['Filedata']['tmp_name'];
+    $targetPath ='/assets/images/';
+    $fileName = md5(basename($_FILES['Filedata']['name']) . microtime());
+    $targetFile = rtrim($targetPath,'/') . '/' . $fileName;
+
+    // Validate the file type
+    $fileTypes = array('jpg','jpeg','gif','png', 'tiff', 'jp2'); // File extensions
+    $fileParts = pathinfo($_FILES['Filedata']['name']);
+
+    if (in_array($fileParts['extension'],$fileTypes)) {
+        move_uploaded_file($tempFile,$targetFile);
+        echo $fileName;
+    } else {
+        echo 0;
+    }
+    die;
+} else if (isset($_POST['submit']) && !empty($_POST['file_name'])) {
     $fileIsUploaded = true;
 }
 ?>
@@ -49,18 +49,13 @@ if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'
                 <textarea name="description" placeholder="Description"><?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
                 <input type="text" name="place" placeholder="Place" value="<?php echo isset($_POST['place']) ? $_POST['place'] : ''; ?>"/>
                 <div class="relative">
-                    <input type="file" id="file" name="file" class="fileupload" onchange="changeFileName(this);" />
-                    <!--<label for="file" class="fileuptext">Upload Image</label>-->
-                    <span id="filename"></span>
+                    <input type="file" id="file" name="file" class="fileupload" />
                     <input type="hidden" value="" id="file_name" name="file_name" />
                     <input type="submit" value="Start" id="form_submit" name="submit" disabled="disabled"/>
                 </div>    
                 <div class="clear"></div>
             </form>
             <script>
-                function changeFileName(elem) {
-                    document.getElementById('filename').innerHTML = elem.value.replace(/.*\\/g, '');
-                }
 		<?php $timestamp = time();?>
 		$(function() {
                     $('#file').uploadify({
@@ -73,10 +68,11 @@ if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'
                         'fileSizeLimit' : '30MB',
                         'fileTypeExts' : '*.gif; *.jpg; *.png; *.tiff; *.jp2',
                         'multi'    : false,
+                        'buttonText' : 'Upload Image',
+                        'removeCompleted' : false,
                         'onUploadSuccess' : function(file, data, response) {
                             if (data !== '0') {
                                 $('#file_name').val(data);
-                                $('#filename').html(file.name);
                                 $('#form_submit').removeAttr('disabled');
                             } else {
                                 $('.error').show();
