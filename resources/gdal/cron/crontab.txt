@@ -1,0 +1,2 @@
+*/15 * * * * /usr/bin/php /gdal/cron/cron_clear.php
+

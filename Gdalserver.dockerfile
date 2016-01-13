@@ -44,8 +44,7 @@ ADD ./resources/gdal/cron/cron_clear.php /gdal/cron/cron_clear.php
 RUN apt-get update && apt-get install cron -y
 
 #Use the crontab file
-RUN sed -i '$ a\*/15 * * * * /usr/bin/php /gdal/cron/cron_clear.php' /etc/crontab
-RUN crontab
+RUN crontab /gdal/cron/crontab.txt
 
 VOLUME ["/app", "/assets"]
 
