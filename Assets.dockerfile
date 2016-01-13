@@ -60,7 +60,7 @@ RUN \curl --silent --location https://deb.nodesource.com/setup_4.x | bash -
 RUN apt-get install --yes nodejs
 RUN apt-get install --yes build-essential
 
-RUN npm install napa@1.2.0 --save-dev && \
+RUN npm install napa@2.2.0 --save-dev && \
     npm install gulp@3.9.0 && \
     npm cache clear
 
