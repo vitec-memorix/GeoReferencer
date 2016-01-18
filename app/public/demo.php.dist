@@ -8,7 +8,7 @@ if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'
     $targetFile = rtrim($targetPath,'/') . '/' . $fileName;
 
     // Validate the file type
-    $fileTypes = array('jpg','jpeg','gif','png', 'tiff', 'jp2'); // File extensions
+    $fileTypes = array('jpg','jpeg','gif','png', 'tiff', 'jp2', 'JPG','JPEG','GIF','PNG', 'TIFF', 'JP2'); // File extensions
     $fileParts = pathinfo($_FILES['Filedata']['name']);
 
     if (in_array($fileParts['extension'],$fileTypes)) {
@@ -69,7 +69,7 @@ if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'
                         'swf'      : '/uploadify/uploadify.swf',
                         'uploader' : '/',
                         'fileSizeLimit' : '30MB',
-                        'fileTypeExts' : '*.gif; *.jpg; *.jpeg; *.png; *.tiff; *.jp2',
+                        'fileTypeExts' : '*.gif; *.jpg; *.jpeg; *.png; *.tiff; *.jp2; *.GIF; *.JPG; *.JPEG; *.PNG; *.TIFF; *.JP2',
                         'multi'    : false,
                         'buttonText' : 'Upload Image',
                         'removeCompleted' : false,
