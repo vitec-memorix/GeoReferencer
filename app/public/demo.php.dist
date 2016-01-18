@@ -53,6 +53,7 @@ if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'
                     <span class="info">Maximum upload file size is 30MB.</span>
                     <div class="clear"></div>
                     <input type="hidden" value="" id="file_name" name="file_name" />
+                    <input type="hidden" value="" id="file_original_name" name="file_original_name" />
                     <input type="submit" value="Start" id="form_submit" name="submit" disabled="disabled"/>
                 </div>    
                 <div class="clear"></div>
@@ -75,6 +76,7 @@ if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'
                         'onUploadSuccess' : function(file, data, response) {
                             if (data !== '0') {
                                 $('#file_name').val(data);
+                                $('#file_original_name').val(file.name);
                                 $('#form_submit').removeAttr('disabled');
                             } else {
                                 $('.error').show();
@@ -97,7 +99,7 @@ if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'
                         .run(function (GeoState, GeoImage) {
                             var image = GeoImage.$new({
                                 'url': '{{API_URL}}/file/<?php echo $_POST['file_name']; ?>',
-                                'imageName': '<?php echo addslashes($originalFileName); ?>',
+                                'imageName': '<?php echo addslashes($_POST['file_original_name']); ?>',
                                 'title': '<?php echo addslashes($_POST['title']); ?>',
                                 'description': '<?php echo addslashes($_POST['description']); ?>',
                                 'place': '<?php echo addslashes($_POST['place']); ?>'
