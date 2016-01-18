@@ -68,7 +68,7 @@ if (!empty($_FILES) && $_POST['token'] == md5('unique_salt' . $_POST['timestamp'
                         'swf'      : '/uploadify/uploadify.swf',
                         'uploader' : '/',
                         'fileSizeLimit' : '30MB',
-                        'fileTypeExts' : '*.gif; *.jpg; *.png; *.tiff; *.jp2',
+                        'fileTypeExts' : '*.gif; *.jpg; *.jpeg; *.png; *.tiff; *.jp2',
                         'multi'    : false,
                         'buttonText' : 'Upload Image',
                         'removeCompleted' : false,
