@@ -212,10 +212,15 @@
         
         $scope.$on('leafletDirectiveMap.click', function(event, e) {
             leafletData.getMap('geoMap').then(function (map) {
-                if (!GeoState.checkPermissions('addMapMarker')) {
-                    toastr.info(gettextCatalog.getString('Please click "Start" button first.'));
+                if (!GeoState.checkPermissions('addMapMarker') && GeoState.checkPermissions('addImageMarker')) {
+                    toastr.info(gettextCatalog.getString('Please place a marker on the old map first.'));
                     return;
                 }
+                
+                if (!GeoState.checkPermissions('addMapMarker')) {
+                    return;
+                }
+                
                 var marker = GeoState.getMarkerById(GeoState.getCurrentMarkerId());
                 marker.geoLat = e.leafletEvent.latlng.lat;
                 marker.geoLng = e.leafletEvent.latlng.lng;

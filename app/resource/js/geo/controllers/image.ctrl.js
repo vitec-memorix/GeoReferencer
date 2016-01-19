@@ -218,8 +218,12 @@
             
         $scope.$on('leafletDirectiveMap.click', function(event, e) {
             leafletData.getMap('imageMap').then(function (map) {
+                if (!GeoState.checkPermissions('addImageMarker') && GeoState.checkPermissions('addMapMarker')) {
+                    toastr.info(gettextCatalog.getString('Please place a marker on the new map.'));
+                    return;
+                }
+                
                 if (!GeoState.checkPermissions('addImageMarker')) {
-                    toastr.info(gettextCatalog.getString('Please click "Start" button first.'));
                     return;
                 }
                 

@@ -17,7 +17,7 @@ www:
   volumes:
     - ./app/config/routes.php:/app/config/routes.php
     - ./app/public/dist:/app/public/dist
-    - ./app/public/uploadify:/app/public/uploadify
+    - ./app/public/dropzone:/app/public/dropzone
     - ./app/src:/app/src
     - ./app/resource/js/boot:/app/resource/js/boot
     - ./app/resource/js/geo:/app/resource/js/geo
@@ -32,7 +32,7 @@ assets:
   volumes:
     - ./app/config/routes.php:/app/config/routes.php
     - ./app/public/dist:/app/public/dist
-    - ./app/public/uploadify:/app/public/uploadify
+    - ./app/public/dropzone:/app/public/dropzone
     - ./app/src:/app/src
     - ./app/resource/js/boot:/app/resource/js/boot
     - ./app/resource/js/geo:/app/resource/js/geo

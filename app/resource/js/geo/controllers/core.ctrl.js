@@ -60,6 +60,10 @@
                                 }
                             }
                         );
+                    } else if (GeoState.checkPermissions('addImageMarker')) {
+                        toastr.info(gettextCatalog.getString('Please place a marker on the old map first.'));
+                    } else if (GeoState.checkPermissions('addMapMarker')) {
+                        toastr.info(gettextCatalog.getString('Please place a marker on the new map first.'));
                     }
                 }
             },
