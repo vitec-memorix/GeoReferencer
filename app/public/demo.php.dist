@@ -67,9 +67,13 @@ if (!empty($_FILES['file']['tmp_name'])) {
                         uploadMultiple: false,
                         maxFiles: 1,
                         acceptedFiles: 'image/*',
+                        init: function() {
+                            this.on("maxfilesexceeded", function(file) {
+                                  this.removeAllFiles();
+                                  this.addFile(file);
+                            });
+                        },
                         success: function(file, data) {
-                            console.info(file);
-                            console.info(data);
                             if (data !== '0') {
                                 $('#file_name').val(data);
                                 $('#file_original_name').val(file.name);
