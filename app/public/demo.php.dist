@@ -81,33 +81,8 @@ if (!empty($_FILES['file']['tmp_name'])) {
                             } else {
                                 $('.error').show();
                             }
-                        },
-                        error: function(file, error) {
-                            $('.error').show();
                         }
                     };
-                    /*$('#file').uploadify({
-                        'formData': {
-                            'timestamp' : '<?php echo $timestamp;?>',
-                            'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
-                        },
-                        'swf'      : '/uploadify/uploadify.swf',
-                        'uploader' : '/',
-                        'fileSizeLimit' : '30MB',
-                        'fileTypeExts' : '*.gif; *.jpg; *.jpeg; *.png; *.tiff; *.jp2; *.GIF; *.JPG; *.JPEG; *.PNG; *.TIFF; *.JP2',
-                        'multi'    : false,
-                        'buttonText' : 'Upload Image',
-                        'removeCompleted' : false,
-                        'onUploadSuccess' : function(file, data, response) {
-                            if (data !== '0') {
-                                $('#file_name').val(data);
-                                $('#file_original_name').val(file.name);
-                                $('#form_submit').removeAttr('disabled');
-                            } else {
-                                $('.error').show();
-                            }
-                        }
-                    });*/
 		});
             </script>
         <?php } else { ?>
