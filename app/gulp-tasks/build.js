@@ -15,6 +15,7 @@ module.exports = function (gulp, deps, taskConfig, fullConfig) {
                 'move-deps',
                 'build-deps',
                 'build-sass',
+                'i18n-po',
                 'build-js',
                 'build-html'
             );
