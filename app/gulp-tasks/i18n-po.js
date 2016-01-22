@@ -7,6 +7,7 @@ module.exports = function (gulp, deps, taskConfig) {
             taskConfig.src,
             _.identity
         );
+console.info(sources);
         
         return gulp.src(sources)
             .pipe(angularGettext.compile())

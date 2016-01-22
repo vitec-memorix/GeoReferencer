@@ -1,0 +1,198 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: nl\n"
+
+#: geo/controllers/core.ctrl.js:112
+msgid "?"
+msgstr "?"
+
+#: geo/views/directives/core.html:49
+msgid ""
+"Aan de rechterkant kan een straat en/of plaatsnaam ingevoerd worden zodat de "
+"kaart naar betreffen de locatie inzoomt. Door \"use historical place name\" "
+"aan te klikken is het mogelijk om een historische plaats naam in te voeren. "
+"Het systeem zal dan een poging doen deze te koppelen aan moderne plaatsnaam."
+msgstr ""
+
+#: geo/views/directives/image-form.html:5
+msgid "Apply"
+msgstr "Pas toe"
+
+#: geo/controllers/core.ctrl.js:37 geo/controllers/finish.ctrl.js:46
+msgid "Are you sure? All your content will be removed!"
+msgstr "Weet u het zeker? Alle zal worden verwijderd"
+
+#: geo/views/directives/finish.html:13
+msgid "Choose format"
+msgstr "Kies een download formaat"
+
+#: geo/views/directives/preview.html:5
+msgid "Close preview"
+msgstr "Sluit preview"
+
+#: geo/views/directives/core.html:36
+msgid ""
+"Doel van de applicatie is het koppelen van locaties op de historische kaart "
+"aan locaties op de moderne kaart door het plaatsen van \"referentie punten"
+"\". Door minimaal 3 goed gekozen referentiepunten te plaatsen wordt het "
+"mogelijk de historische kaart te koppelen aan het huidige straatbeeld."
+msgstr ""
+
+#: geo/views/directives/core.html:47
+msgid ""
+"Door te klikken op \"List\" krijg je de gekoppelde informatie te zien. "
+"Referentiepunten kunnen in de lijst ook verwijderd worden."
+msgstr ""
+
+#: geo/views/directives/finish.html:17
+msgid "Download"
+msgstr "Download"
+
+#: geo/controllers/core.ctrl.js:88
+msgid "Finish"
+msgstr "Afronden"
+
+#: geo/views/directives/finish.html:11
+msgid "Finish and download"
+msgstr "Afronden en downloaden"
+
+#: geo/views/directives/core.html:51
+msgid "Gebruik de + en - om in en uit te zoomen op een van de vensters."
+msgstr ""
+
+#: geo/views/directives/finish.html:15
+msgid "GeoJSON"
+msgstr "GeoJSON"
+
+#: geo/views/directives/finish.html:14
+msgid "Geotiff"
+msgstr "GeoTIFF
+
+#: geo/views/directives/core.html:45
+msgid ""
+"Geplaatste referentie punten kunnen verplaatst worden door ze aan te klikken "
+"en de muisknop ingedrukt te houden en los te laten op de nieuwe locatie."
+msgstr ""
+
+#: geo/views/directives/core.html:44
+msgid ""
+"Herhaal dit proces tot dat er minimaal 3 referentie punten geplaatst zijn. "
+"Referentiepunten met dezelfde kleur horen bij elkaar."
+msgstr ""
+
+#: geo/views/directives/core.html:35
+msgid "Hoe werkt het?"
+msgstr ""
+
+#: geo/views/directives/core.html:39
+msgid "klik op \"New reference point\""
+msgstr ""
+
+#: geo/views/directives/core.html:40
+msgid "klik op de locatie op de historische kaart"
+msgstr ""
+
+#: geo/views/directives/core.html:41
+msgid "klik op de verwante locatie op de nieuwe kaart"
+msgstr ""
+
+#: geo/views/directives/core.html:53
+msgid ""
+"Klik op Preview om te zie of de historische kaart goed over de nieuwe kaart "
+"ligt. In de Preview modus kan er door middel van de slider ook gespeeld "
+"worden met de transparantie."
+msgstr ""
+
+#: geo/views/directives/core.html:54
+msgid "Klik weer op Preview om deze te sluiten."
+msgstr ""
+
+#: geo/views/directives/core.html:29 geo/views/directives/image-form.html:3
+msgid "Lat"
+msgstr ""
+
+#: geo/controllers/core.ctrl.js:73
+msgid "List"
+msgstr ""
+
+#: geo/views/directives/core.html:30 geo/views/directives/image-form.html:4
+msgid "Lng"
+msgstr ""
+
+#: geo/services/state.js:266
+msgid "Missing data for point !"
+msgstr "Geen gegevens gevonden voor deze locatie"
+
+#: geo/controllers/finish.ctrl.js:32 geo/controllers/finish.ctrl.js:36
+#: geo/controllers/preview.ctrl.js:83
+msgid "No image found."
+msgstr "Geen afbeelding gevonden"
+
+#: geo/controllers/core.ctrl.js:217
+msgid "No results found."
+msgstr "Geen locaties gevonden."
+
+#: geo/controllers/core.ctrl.js:59
+msgid "Place 2 markers"
+msgstr "Plaats 2 markeringen"
+
+#: geo/controllers/core.ctrl.js:79
+msgid "Please add reference points first."
+msgstr "Plaats eerst een markering"
+
+#: geo/controllers/core.ctrl.js:66
+msgid "Please place a marker on the new map first."
+msgstr "Zet een marker op de huidige kaart (rechts)"
+
+#: geo/controllers/image.ctrl.js:222
+msgid "Please place a marker on the new map."
+msgstr "Zet een marker op de huidige kaart (rechts)"
+
+#: geo/controllers/core.ctrl.js:64 geo/controllers/map.ctrl.js:216
+msgid "Please place a marker on the old map first."
+msgstr "Zet eerst een marker op de oude kaart (links)"
+
+#: geo/controllers/core.ctrl.js:125
+msgid "Preview"
+msgstr "Voorvertoning"
+
+#: geo/views/directives/core.html:31
+msgid "Remove"
+msgstr "Verwijder"
+
+#: geo/views/directives/core.html:13
+msgid "search for location"
+msgstr "Zoek een locatie"
+
+#: geo/controllers/core.ctrl.js:205 geo/controllers/core.ctrl.js:45
+msgid "Start"
+msgstr "Start"
+
+#: geo/controllers/core.ctrl.js:32
+msgid "Start over"
+msgstr "Begin opnieuw"
+
+#: geo/views/directives/finish.html:7
+msgid "Start over?"
+msgstr "Wilt u opnieuw beginnen?"
+
+#: geo/views/directives/core.html:28 geo/views/directives/image-form.html:2
+msgid "Title"
+msgstr "Titel"
+
+#: geo/views/directives/core.html:22
+msgid "use historical place name"
+msgstr "Gebruik historische plaatsnaam"
+
+#: geo/services/reference.js:25
+msgid "You need atleast three reference points."
+msgstr "Je moet minimaal 3 sets aan markers plaatsen voordat je Preview kan bekijken"
