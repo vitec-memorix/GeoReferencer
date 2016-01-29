@@ -29,7 +29,7 @@ msgstr "Pas toe"
 
 #: geo/controllers/core.ctrl.js:37 geo/controllers/finish.ctrl.js:46
 msgid "Are you sure? All your content will be removed!"
-msgstr "Weet u het zeker? Alle zal worden verwijderd"
+msgstr "Weet u het zeker? Alles zal worden verwijderd"
 
 #: geo/views/directives/finish.html:13
 msgid "Choose format"
@@ -37,7 +37,7 @@ msgstr "Kies een download formaat"
 
 #: geo/views/directives/preview.html:5
 msgid "Close preview"
-msgstr "Sluit preview"
+msgstr "Sluit voorvertoning"
 
 #: geo/views/directives/core.html:36
 msgid ""
@@ -107,13 +107,13 @@ msgstr ""
 
 #: geo/views/directives/core.html:53
 msgid ""
-"Klik op Preview om te zie of de historische kaart goed over de nieuwe kaart "
-"ligt. In de Preview modus kan er door middel van de slider ook gespeeld "
+"Klik op Voorvertoning om te zien of de historische kaart goed over de nieuwe kaart "
+"ligt. In de Voorvertoning kan er door middel van de slider ook gespeeld "
 "worden met de transparantie."
 msgstr ""
 
 #: geo/views/directives/core.html:54
-msgid "Klik weer op Preview om deze te sluiten."
+msgid "Klik weer op Voorvertoning om deze te sluiten."
 msgstr ""
 
 #: geo/views/directives/core.html:29 geo/views/directives/image-form.html:3
@@ -122,7 +122,7 @@ msgstr ""
 
 #: geo/controllers/core.ctrl.js:73
 msgid "List"
-msgstr ""
+msgstr "Lijst"
 
 #: geo/views/directives/core.html:30 geo/views/directives/image-form.html:4
 msgid "Lng"
@@ -151,15 +151,15 @@ msgstr "Plaats eerst een markering"
 
 #: geo/controllers/core.ctrl.js:66
 msgid "Please place a marker on the new map first."
-msgstr "Zet een marker op de huidige kaart (rechts)"
+msgstr "Zet een markering op de nieuwe kaart (rechts)"
 
 #: geo/controllers/image.ctrl.js:222
 msgid "Please place a marker on the new map."
-msgstr "Zet een marker op de huidige kaart (rechts)"
+msgstr "Zet een markering op de nieuwe kaart (rechts)"
 
 #: geo/controllers/core.ctrl.js:64 geo/controllers/map.ctrl.js:216
 msgid "Please place a marker on the old map first."
-msgstr "Zet eerst een marker op de oude kaart (links)"
+msgstr "Zet eerst een markering op de oude kaart (links)"
 
 #: geo/controllers/core.ctrl.js:125
 msgid "Preview"
@@ -195,4 +195,4 @@ msgstr "Gebruik historische plaatsnaam"
 
 #: geo/services/reference.js:25
 msgid "You need atleast three reference points."
-msgstr "Je moet minimaal 3 sets aan markers plaatsen voordat je Preview kan bekijken"
+msgstr "Plaats minimaal 3 sets markeringen"
