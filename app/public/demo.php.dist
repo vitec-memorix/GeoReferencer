@@ -88,7 +88,7 @@ if (!empty($_FILES['file']['tmp_name'])) {
         <?php } else { ?>
             <georeferencer />
 
-            <script type="text/javascript" src="//maps.google.com/maps/api/js?v=3&sensor=false"></script>
+            <script type="text/javascript" src="//maps.google.com/maps/api/js?v=3&sensor=false&region=nl"></script>
             <script type="text/javascript" src="/dist/js/app-deps.min.js"></script>
             <script type="text/javascript" src="/dist/js/app-partials.min.js"></script>
             <script type="text/javascript" src="/dist/js/app.js"></script>
