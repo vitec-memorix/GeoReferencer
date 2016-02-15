@@ -23,7 +23,7 @@
         var mapLayers = {
             osm: {
                 name: 'Open Street Map',
-                url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                url: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 type: 'xyz'
             },
             googleTerrain: {
@@ -99,7 +99,7 @@
                 }
                 
                 var layers = {
-                    'Open Street Map': new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}),
+                    'Open Street Map': new L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}),
                     'Google Terrain': new L.Google('TERRAIN', {}),
                     'Google Hybrid': new L.Google('HYBRID', {}),
                     'Google Streets': new L.Google('ROADMAP', {})
