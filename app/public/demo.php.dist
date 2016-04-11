@@ -50,7 +50,7 @@ if (!empty($_FILES['file']['tmp_name'])) {
                 <div class="relative">
                     <div id="dropzone" class="dropzone"></div>
                     <input type="file" id="file" name="file" class="fileupload" />
-                    <span class="info">Maximum upload file size is 30MB.</span>
+                    <span class="info">Maximum upload file size is 500MB.</span>
                     <div class="clear"></div>
                     <input type="hidden" value="" id="file_name" name="file_name" />
                     <input type="hidden" value="" id="file_original_name" name="file_original_name" />
@@ -63,7 +63,7 @@ if (!empty($_FILES['file']['tmp_name'])) {
 		$(function() {
                     Dropzone.options.dropzone = {
                         url: "/",
-                        maxFilesize: 30,
+                        maxFilesize: 500,
                         uploadMultiple: false,
                         maxFiles: 1,
                         acceptedFiles: 'image/*',
