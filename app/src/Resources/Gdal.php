@@ -4,8 +4,8 @@ namespace Georeferencer\Resources;
 class Gdal
 {
     const GDAL_GCP = '-gcp %1$s %2$s %3$s %4$s';
-    const GDAL_TRANSLATE = 'gdal_translate -of JP2ECW -a_srs EPSG:4326 %1$s "%2$s" "%3$s"';
-    const GDAL_WARP = 'gdalwarp -of JP2ECW -dstalpha "%1$s" "%2$s"'; // -co TFW=YES creates word file
+    const GDAL_TRANSLATE = 'gdal_translate -of %1$s -a_srs EPSG:4326 %2$s "%3$s" "%4$s"';
+    const GDAL_WARP = 'gdalwarp -of %1$s -dstalpha "%2$s" "%3$s"'; // -co TFW=YES creates word file
     const GDAL_INFO = 'gdalinfo -json "%1$s"';
     
     protected $image;
@@ -85,8 +85,10 @@ class Gdal
     protected function addCoverageFile()
     {
         $config = $this->config;
-        $url = $config['geoserver']['url'] . '/workspaces/' . $config['geoserver']['workspace'] . '/coveragestores/' . $this->coverageStore . '/external.jp2ecw?configure=first&coverageName=' . $this->coverageStore ;
-        $request = 'file:/assets/images/' . $this->coverageStore . '_geo_warp.jp2';
+        $url = $config['geoserver']['url'] . '/workspaces/' . $config['geoserver']['workspace'] . '/coveragestores/' .
+            $this->coverageStore . '/external.' . $config['gdal']['fileExternal'] .
+            '?configure=first&coverageName=' . $this->coverageStore ;
+        $request = 'file:/assets/images/' . $this->coverageStore . '_geo_warp.' . $config['gdal']['fileExtension'];
         $handle = curl_init($url);
 
         curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -102,6 +104,7 @@ class Gdal
     protected function warp()
     {
         $points = [];
+        $config = $this->config;
         foreach ($this->referencePoints as $reference) {
             $points[] = sprintf(
                 self::GDAL_GCP,
@@ -116,9 +119,10 @@ class Gdal
         $progress = 0;
         $cmd = sprintf(
             self::GDAL_TRANSLATE,
+            $config['gdal']['fileFormat'],
             $points,
             $this->image,
-            '/assets/images/' . $this->coverageStore . '_geo.jp2'
+            '/assets/images/' . $this->coverageStore . '_geo.' . $config['gdal']['fileExtension']
         );
         $progress = shell_exec($cmd);
 
@@ -128,8 +132,9 @@ class Gdal
         
         $cmd = sprintf(
             self::GDAL_WARP,
-            '/assets/images/' . $this->coverageStore . '_geo.jp2',
-            '/assets/images/' . $this->coverageStore . '_geo_warp.jp2'
+            $config['gdal']['fileFormat'],
+            '/assets/images/' . $this->coverageStore . '_geo.' . $config['gdal']['fileExtension'],
+            '/assets/images/' . $this->coverageStore . '_geo_warp.' . $config['gdal']['fileExtension']
         );
         $progress = shell_exec($cmd);
 
@@ -180,9 +185,10 @@ class Gdal
     
     protected function createGeoJson()
     {
+        $config = $this->config;
         $cmd = sprintf(
             self::GDAL_INFO,
-            '/assets/images/' . $this->coverageStore . '_geo_warp.jp2'
+            '/assets/images/' . $this->coverageStore . '_geo_warp.' . $config['gdal']['fileExtension']
         );
         $progress = shell_exec($cmd);
 

@@ -2,6 +2,7 @@
 namespace Georeferencer\Controller;
 
 use Georeferencer\Resources\Gdal;
+use Georeferencer\Application\Micro as Application;
 
 /**
  * @acl access whitelist
@@ -16,14 +17,15 @@ class DownloadCtrl extends AbstractCtrl
         try {
             $request = new \Phalcon\Http\Request();
             $fileName = $request->get('fileName', null, '');
+            $appConfig = $this->getDI()->get(Application::DI_CONFIG);
             switch ($format) {
                 case 'geojson':
                     $file = '/assets/images/' . $id . '_geo_warp.json';
                     $fileName = preg_replace('~\..*$~', '_geo_json.json', $fileName);
                     break;
                 case 'geotiff':
-                    $file = '/assets/images/' . $id . '_geo_warp.jp2';
-                    $fileName = preg_replace('~\..*$~', '_geo_tiff.jp2', $fileName);
+                    $file = '/assets/images/' . $id . '_geo_warp.' . $appConfig['gdal']['fileExtension'];
+                    $fileName = preg_replace('~\..*$~', '_geo_tiff.' . $appConfig['gdal']['fileExtension'], $fileName);
                     break;
                 default:
                     $file = '/assets/images/' . $id;

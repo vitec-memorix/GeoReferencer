@@ -9,6 +9,11 @@ return new \ArrayObject(
             'password' => '{{DB_PASSWORD}}'
         ],
         'cors' => '{{CORS}}',
+        'gdal' => [
+            'fileExtension' => '{{FILE_EXTENSION}}',
+            'fileFormat' => '{{FILE_FORMAT}}',
+            'fileExternal' => '{{FILE_EXTERNAL}}'
+        ],
         'geoserver' => [
             'url' => '{{GEOSERVER_URL}}',
             'user' => '{{GEOSERVER_USER}}',

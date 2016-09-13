@@ -17,7 +17,8 @@ class GeoCtrl extends AbstractCtrl
     public function get($store)
     {
         try {
-            if (is_file('/assets/images/' . $store . '_geo_warp.jp2')) {
+            $appConfig = $this->getDI()->get(Application::DI_CONFIG);
+            if (is_file('/assets/images/' . $store . '_geo_warp.' . $appConfig['gdal']['fileExtension'])) {
                 return ['store' => $store];
             }
             return [];
@@ -46,7 +47,8 @@ class GeoCtrl extends AbstractCtrl
                 throw new Exception('No store name found.', 404);
             }
 
-            if (!is_file('/assets/images/' . $post['storeName'] . '_geo_warp.jp2')) {
+            $appConfig = $this->getDI()->get(Application::DI_CONFIG);
+            if (!is_file('/assets/images/' . $post['storeName'] . '_geo_warp.' . $appConfig['gdal']['fileExtension'])) {
                 register_shutdown_function([$this, 'gdalConvert'], $post);
                 ignore_user_abort(true);
                 header('Content-Length: 0');
@@ -58,7 +60,6 @@ class GeoCtrl extends AbstractCtrl
                 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
                 header('Access-Control-Allow-Headers: Accept, Accept-Encoding, Accept-Language, Authorization, Cache-Control, Content-Type, X-Requested-With');
                 
-                $appConfig = $this->getDI()->get(Application::DI_CONFIG);
                 if (isset($appConfig['cors'])) {
                     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
@@ -87,7 +88,7 @@ class GeoCtrl extends AbstractCtrl
     
     public function gdalConvert($post)
     {
-        $config = $this->getDi()->get('config');
+        $config = $this->getDi()->get(Application::DI_CONFIG);
         $gdal = new \Georeferencer\Resources\Gdal($config);
         $gdal->setImage($post['image'])
             ->setCoverageStore($post['storeName'])
