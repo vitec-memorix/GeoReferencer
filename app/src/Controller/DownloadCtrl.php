@@ -11,7 +11,7 @@ class DownloadCtrl extends AbstractCtrl
     /**
      * @acl access public
      */
-    public function get($id, $format = null) 
+    public function get($id, $format = null)
     {
         try {
             $request = new \Phalcon\Http\Request();
@@ -22,8 +22,8 @@ class DownloadCtrl extends AbstractCtrl
                     $fileName = preg_replace('~\..*$~', '_geo_json.json', $fileName);
                     break;
                 case 'geotiff':
-                    $file = '/assets/images/' . $id . '_geo_warp.tiff';
-                    $fileName = preg_replace('~\..*$~', '_geo_tiff.tiff', $fileName);
+                    $file = '/assets/images/' . $id . '_geo_warp.jp2';
+                    $fileName = preg_replace('~\..*$~', '_geo_tiff.jp2', $fileName);
                     break;
                 default:
                     $file = '/assets/images/' . $id;

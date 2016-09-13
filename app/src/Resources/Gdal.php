@@ -4,8 +4,8 @@ namespace Georeferencer\Resources;
 class Gdal
 {
     const GDAL_GCP = '-gcp %1$s %2$s %3$s %4$s';
-    const GDAL_TRANSLATE = 'gdal_translate -a_srs EPSG:4326 %1$s "%2$s" "%3$s"';
-    const GDAL_WARP = 'gdalwarp -dstalpha "%1$s" "%2$s"'; // -co TFW=YES creates word file
+    const GDAL_TRANSLATE = 'gdal_translate -of JP2ECW -a_srs EPSG:4326 %1$s "%2$s" "%3$s"';
+    const GDAL_WARP = 'gdalwarp -of JP2ECW -dstalpha "%1$s" "%2$s"'; // -co TFW=YES creates word file
     const GDAL_INFO = 'gdalinfo -json "%1$s"';
     
     protected $image;
@@ -16,7 +16,7 @@ class Gdal
     
     protected $config;
     
-    public function __construct($config = []) 
+    public function __construct($config = [])
     {
         $this->config = $config;
     }
@@ -42,7 +42,7 @@ class Gdal
     /**
      * @acl access public
      */
-    public function convert() 
+    public function convert()
     {
         $this->warp()
             ->addWorkspace()
@@ -53,17 +53,17 @@ class Gdal
         return ['store' => $this->coverageStore];
     }
     
-    protected function addWorkspace() 
+    protected function addWorkspace()
     {
         $config = $this->config;
         $url = $config['geoserver']['url'] . '/workspaces/' . $config['geoserver']['workspace'];
         $handle = curl_init($url);
         curl_setopt($handle, CURLOPT_GET, true);
-        curl_setopt($handle,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($handle, CURLOPT_USERPWD, $config['geoserver']['user'] . ':' . $config['geoserver']['pass']);
         curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-type: text/xml", "Accept: text/xml"));
-	$response = curl_exec($handle);
-	curl_close($handle);
+        $response = curl_exec($handle);
+        curl_close($handle);
         
         if (strpos($response, 'No such workspace') === false) {
             return $this;
@@ -73,37 +73,36 @@ class Gdal
         $request = '<workspace><name>' . $config['geoserver']['workspace'] . '</name></workspace>';
         $handle = curl_init($url);
         curl_setopt($handle, CURLOPT_POST, true);
-        curl_setopt($handle,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($handle, CURLOPT_USERPWD, $config['geoserver']['user'] . ':' . $config['geoserver']['pass']);
         curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-type: application/xml"));
         curl_setopt($handle, CURLOPT_POSTFIELDS, $request);
-	$response = curl_exec($handle);
-	curl_close($handle);
+        $response = curl_exec($handle);
+        curl_close($handle);
         return $this;
     }
     
-    protected function addCoverageFile() 
+    protected function addCoverageFile()
     {
         $config = $this->config;
-        $url = $config['geoserver']['url'] . '/workspaces/' . $config['geoserver']['workspace'] . '/coveragestores/' . $this->coverageStore . '/external.geotiff?configure=first&coverageName=' . $this->coverageStore ;
-        $request = 'file:/assets/images/' . $this->coverageStore . '_geo_warp.tiff';
+        $url = $config['geoserver']['url'] . '/workspaces/' . $config['geoserver']['workspace'] . '/coveragestores/' . $this->coverageStore . '/external.jp2ecw?configure=first&coverageName=' . $this->coverageStore ;
+        $request = 'file:/assets/images/' . $this->coverageStore . '_geo_warp.jp2';
         $handle = curl_init($url);
 
         curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($handle,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($handle, CURLOPT_USERPWD, $config['geoserver']['user'] . ':' . $config['geoserver']['pass']);
         curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-type: text/plain"));
         curl_setopt($handle, CURLOPT_POSTFIELDS, $request);
-	$response = curl_exec($handle);
-	curl_close($handle);
+        $response = curl_exec($handle);
+        curl_close($handle);
         return $this;
     }
     
-    protected function warp() 
+    protected function warp()
     {
         $points = [];
         foreach ($this->referencePoints as $reference) {
-
             $points[] = sprintf(
                 self::GDAL_GCP,
                 $reference['tileCoordinatesX'],
@@ -119,7 +118,7 @@ class Gdal
             self::GDAL_TRANSLATE,
             $points,
             $this->image,
-            '/assets/images/' . $this->coverageStore . '_geo.tiff'
+            '/assets/images/' . $this->coverageStore . '_geo.jp2'
         );
         $progress = shell_exec($cmd);
 
@@ -128,9 +127,9 @@ class Gdal
         }
         
         $cmd = sprintf(
-            self::GDAL_WARP, 
-            '/assets/images/' . $this->coverageStore . '_geo.tiff', 
-            '/assets/images/' . $this->coverageStore . '_geo_warp.tiff'
+            self::GDAL_WARP,
+            '/assets/images/' . $this->coverageStore . '_geo.jp2',
+            '/assets/images/' . $this->coverageStore . '_geo_warp.jp2'
         );
         $progress = shell_exec($cmd);
 
@@ -141,27 +140,27 @@ class Gdal
         return $this;
     }
     
-    protected function addCoverageStore() 
+    protected function addCoverageStore()
     {
         $config = $this->config;
         $url = $config['geoserver']['url'] . '/workspaces/' . $config['geoserver']['workspace'] . '/coveragestores';
         $request = '<coverageStore><name>' . $this->coverageStore . '</name><workspace>' . $config['geoserver']['workspace'] . '</workspace><enabled>true</enabled></coverageStore>';
         $handle = curl_init($url);
 //        $f = fopen("/assets/images/request.txt", "w");
-        curl_setopt($handle, CURLOPT_POST, True);
-        curl_setopt($handle,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($handle, CURLOPT_POST, true);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($handle, CURLOPT_USERPWD, $config['geoserver']['user'] . ':' . $config['geoserver']['pass']);
         curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-type: application/xml"));
         curl_setopt($handle, CURLOPT_POSTFIELDS, $request);
 //        curl_setopt($handle, CURLOPT_VERBOSE, 1);
 //        curl_setopt($handle, CURLOPT_STDERR, $f);
-	$response = curl_exec($handle);
-	curl_close($handle);
+        $response = curl_exec($handle);
+        curl_close($handle);
 //        fclose($f);
         return $this;
     }
     
-    public function delete() 
+    public function delete()
     {
         if (empty($this->coverageStore)) {
             throw new Exception('Invalid store.');
@@ -171,19 +170,19 @@ class Gdal
         $handle = curl_init($url);
 
         curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'DELETE');
-        curl_setopt($handle,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($handle, CURLOPT_USERPWD, $config['geoserver']['user'] . ':' . $config['geoserver']['pass']);
         curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-type: text/plain"));
-	$response = curl_exec($handle);
-	curl_close($handle);
+        $response = curl_exec($handle);
+        curl_close($handle);
         return $this;
     }
     
     protected function createGeoJson()
     {
         $cmd = sprintf(
-            self::GDAL_INFO, 
-            '/assets/images/' . $this->coverageStore . '_geo_warp.tiff'
+            self::GDAL_INFO,
+            '/assets/images/' . $this->coverageStore . '_geo_warp.jp2'
         );
         $progress = shell_exec($cmd);
 
@@ -191,10 +190,6 @@ class Gdal
             throw new Exception('There was a problem creating geoJSON.');
         }
         $data = json_decode($progress);
-        
-        foreach ($data->cornerCoordinates as $point) {
-            
-        }
         
         $geoJson = json_encode([
             'type' => 'FeatureCollection',

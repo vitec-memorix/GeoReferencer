@@ -14,10 +14,10 @@ class GeoCtrl extends AbstractCtrl
     /**
      * @acl access public
      */
-    public function get($store) 
+    public function get($store)
     {
         try {
-            if (is_file('/assets/images/' . $store . '_geo_warp.tiff')) {
+            if (is_file('/assets/images/' . $store . '_geo_warp.jp2')) {
                 return ['store' => $store];
             }
             return [];
@@ -29,11 +29,11 @@ class GeoCtrl extends AbstractCtrl
     /**
      * @acl access public
      */
-    public function preview() 
+    public function preview()
     {
         try {
             $post = $this->getBodyParams();
-            if (empty($post) || empty($post['referencePoints'])){
+            if (empty($post) || empty($post['referencePoints'])) {
                 throw new Exception('No reference points found.', 404);
             }
             if (count($post['referencePoints']) < 3) {
@@ -46,7 +46,7 @@ class GeoCtrl extends AbstractCtrl
                 throw new Exception('No store name found.', 404);
             }
 
-            if (!is_file('/assets/images/' . $post['storeName'] . '_geo_warp.tiff')) {
+            if (!is_file('/assets/images/' . $post['storeName'] . '_geo_warp.jp2')) {
                 register_shutdown_function([$this, 'gdalConvert'], $post);
                 ignore_user_abort(true);
                 header('Content-Length: 0');
@@ -98,7 +98,7 @@ class GeoCtrl extends AbstractCtrl
     /**
      * @acl access public
      */
-    public function historicalSearch($search) 
+    public function historicalSearch($search)
     {
         try {
             if (empty($search)) {
@@ -107,8 +107,8 @@ class GeoCtrl extends AbstractCtrl
 
             $handle = curl_init(self::HISTORICAL_SEARCH_URL . $search);
             curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'GET');
-            curl_setopt($handle,CURLOPT_RETURNTRANSFER,1);
-            curl_setopt($handle,CURLOPT_SSL_VERIFYPEER,0);
+            curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
             $response = curl_exec($handle);
             curl_close($handle);
             return json_decode($response, true);
