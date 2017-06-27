@@ -14,8 +14,10 @@ ENV LANGUAGE en_US.UTF-8
 RUN apt-get -y update
 
 RUN apt-get install -y software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php5-5.6 && \
+    add-apt-repository -y ppa:ondrej/php && \
     add-apt-repository -y ppa:brightbox/ruby-ng
+
+RUN sudo apt-get update 
 
 #Prepare the image
 RUN apt-get -y update
@@ -29,7 +31,7 @@ curl libcurl3 libcurl3-dev build-essential libpcre3-dev
 RUN apt-get install -y -q git subversion
 #=====END=====#
 
-RUN apt-get install -y -q php5-cli php5-fpm php5-dev php5-mysql php5-pgsql php5-mongo php5-curl php5-gd php5-intl php5-imagick php5-mcrypt php5-memcache php5-xmlrpc php5-xsl
+RUN apt-get install -y -q php5.6-cli php5.6-fpm php5.6-dev php5.6-mysql php5.6-pgsql php5.6-mongo php5.6-curl php5.6-gd php5.6-intl php5.6-imagick php5.6-mcrypt php5.6-memcache php5.6-xmlrpc php5.6-xsl php5.6-cli php5.6-common php5.6-json php5.6-readline php5.6-opcache php5.6-xml
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 #Install phalcon
@@ -38,8 +40,8 @@ RUN git clone git://github.com/phalcon/cphalcon.git /tmp/cphalcon && \
     git checkout 1.3.4 && \
     cd /tmp/cphalcon/build && \
     ./install && \
-    echo "extension=phalcon.so" > /etc/php5/mods-available/phalcon.ini && \
-    php5enmod phalcon && \
+    echo "extension=phalcon.so" > /etc/php/5.6/mods-available/phalcon.ini && \
+    phpenmod phalcon && \
     rm -rf /tmp/cphalcon
 
 #=====Ruby 2.2.2 Installation (with RVM)=====#
@@ -82,9 +84,10 @@ RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
     PATH=$PATH:/usr/local/rvm/gems/ruby-2.2.3/bin:/usr/local/rvm/rubies/ruby-2.2.3/bin && \
     node_modules/.bin/gulp build" && \
     npm cache clear
-RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
-    PATH=$PATH:/usr/local/rvm/gems/ruby-2.2.3/bin:/usr/local/rvm/rubies/ruby-2.2.3/bin:/usr/local/bin && \
-    composer install -o -d /app --prefer-source --no-interaction"
+    
+# RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
+#     PATH=$PATH:/usr/local/rvm/gems/ruby-2.2.3/bin:/usr/local/rvm/rubies/ruby-2.2.3/bin:/usr/local/bin && \
+#     composer install -o -d /app --prefer-source --no-interaction"
 
 VOLUME [ "/app" ]
 
