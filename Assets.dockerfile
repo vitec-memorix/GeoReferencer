@@ -85,9 +85,9 @@ RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
     node_modules/.bin/gulp build" && \
     npm cache clear
     
-# RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
-#     PATH=$PATH:/usr/local/rvm/gems/ruby-2.2.3/bin:/usr/local/rvm/rubies/ruby-2.2.3/bin:/usr/local/bin && \
-#     composer install -o -d /app --prefer-source --no-interaction"
+RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
+    PATH=$PATH:/usr/local/rvm/gems/ruby-2.2.3/bin:/usr/local/rvm/rubies/ruby-2.2.3/bin:/usr/local/bin && \
+    composer install -o -d /app --prefer-source --no-interaction"
 
 VOLUME [ "/app" ]
 

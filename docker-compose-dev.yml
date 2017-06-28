@@ -16,6 +16,7 @@ www:
     - geoserver
   volumes:
     - ./app/config/routes.php:/app/config/routes.php
+    - ./app/public/index.php:/app/public/index.php
     - ./app/public/dist:/app/public/dist
     - ./app/public/dropzone:/app/public/dropzone
     - ./app/src:/app/src
