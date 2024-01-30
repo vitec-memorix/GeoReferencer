@@ -1,8 +1,8 @@
-GeoReferencer
+GeoReferencer (no longer maintained)
 ===========
 An open source, stand-alone web application for georeferencing images, with very simple interface. GeoReferencer converts (scanned) images of maps (JPEG, TIFF, PNG) to GeoTIFF by allowing the user to select reference points on current maps (OpenStreetMap, Google Map or custom).
 
-Developed by <a href="http://www.picturae.nl" target="_blank">Picturae B.V.</a> for the project <a href="http://erfgoedenlocatie.nl/" target="_blank">Erfgoed & Locatie ("Heritage and Location")</a>.
+Developed by <a href="[http://www.picturae.nl](https://www.vitec-memorix.com/en/)" target="_blank"> Vitec Memorix (formarly known as Picturae)</a> for the project <a href="http://erfgoedenlocatie.nl/" target="_blank">Erfgoed & Locatie ("Heritage and Location")</a>.
 
 Screenshot of the start screen
 <img src="https://cloud.githubusercontent.com/assets/16154470/11777918/7d8f5090-a251-11e5-9604-5428da2156ed.png">
